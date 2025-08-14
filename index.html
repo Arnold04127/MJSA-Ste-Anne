@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MJSA - Mouvement des Jeunes au Service de l'Autel</title>
+    <style>
+        /* CSS Reset et styles de base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #343a40;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Couleurs principales */
+        :root {
+            --primary: #2c7be5;
+            --secondary: #6c757d;
+            --success: #00d97e;
+            --info: #39afd1;
+            --warning: #f6c343;
+            --danger: #e63757;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --white: #ffffff;
+            --blue-dark: #1a2a6c;
+            --gold: #d4af37;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--blue-dark), var(--primary));
+            color: var(--white);
+            padding: 1rem 0;
+            position: relative;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin-right: 1rem;
+            object-fit: contain;
+        }
+        
+        .logo-text h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--white);
+        }
+        
+        .logo-text p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Navigation */
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            position: relative;
+            color: var(--white);
+        }
+        
+        nav ul li a:hover {
+            color: var(--gold);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--gold);
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        /* Slider */
+        .slider-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 400px;
+        }
+        
+        .slide {
+            min-width: 100%;
+            position: relative;
+        }
+        
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 1.5rem;
+        }
+        
+        .slide-content h2 {
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 1rem;
+        }
+        
+        .slider-nav button {
+            background: rgba(255, 255, 255, 0.7);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--blue-dark);
+        }
+        
+        .slider-nav button:hover {
+            background: white;
+        }
+        
+        .slider-dots {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dot.active {
+            background: white;
+        }
+        
+        /* Sections */
+        .section {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--blue-dark);
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--gold);
+        }
+        
+        /* A propos */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-image {
+            flex: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Mot du Responsable */
+        .message-section {
+            background: linear-gradient(135deg, var(--blue-dark), #3a56a8);
+            color: white;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .message-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+        
+        .message-container h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--gold);
+        }
+        
+        .message-content {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .message-content::before {
+            content: '"';
+            font-size: 8rem;
+            position: absolute;
+            top: -3rem;
+            left: -1rem;
+            color: rgba(255, 255, 255, 0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+        
+        .message-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .signature {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 2rem;
+            color: var(--gold);
+            margin-top: 1rem;
+        }
+        
+        .responsable-title {
+            font-style: italic;
+            opacity: 0.9;
+        }
+        
+        .message-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.2;
+            z-index: 1;
+        }
+        
+        /* Bibliothèque Média */
+        .media-library {
+            background: var(--light);
+        }
+        
+        .media-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .media-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            background: var(--white);
+        }
+        
+        .media-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .media-thumbnail {
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .media-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .media-item:hover .media-thumbnail img {
+            transform: scale(1.05);
+        }
+        
+        .media-info {
+            padding: 1.5rem;
+        }
+        
+        .media-info h3 {
+            margin-bottom: 0.5rem;
+            color: var(--blue-dark);
+        }
+        
+        .media-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .media-type {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .media-type.photo {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .media-type.video {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+        
+        .view-btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .view-btn:hover {
+            background: var(--blue-dark);
+        }
+        
+        /* Formulaire d'inscription */
+        .form-section {
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+        }
+        
+        .form-container {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 2.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .form-header h2 {
+            color: var(--blue-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-header p {
+            color: var(--secondary);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: var(--white);
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(44, 123, 229, 0.1);
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .submit-btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(to right, var(--primary), var(--blue-dark));
+            color: white;
+            border: none;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Section Inspirante */
+        .inspiration-section {
+            background: url('inspiration-bg.jpg') center/cover no-repeat;
+            padding: 6rem 2rem;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        .inspiration-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 42, 108, 0.85);
+        }
+        
+        .inspiration-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .inspiration-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--gold);
+        }
+        
+        .inspiration-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+        
+        .verse {
+            font-style: italic;
+            font-size: 1.3rem;
+            margin: 2rem 0;
+            position: relative;
+            padding: 0 2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .verse::before,
+        .verse::after {
+            content: '"';
+            font-size: 3rem;
+            position: absolute;
+            color: rgba(212, 175, 55, 0.3);
+        }
+        
+        .verse::before {
+            top: -1rem;
+            left: 0;
+        }
+        
+        .verse::after {
+            bottom: -2rem;
+            right: 0;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(to right, var(--gold), #b8860b);
+            color: var(--dark);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            color: var(--white);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--blue-dark);
+            color: var(--white);
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+            color: var(--white);
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--gold);
+        }
+        
+        .footer-col p {
+            margin-bottom: 1rem;
+            opacity: 0.8;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--gold);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            color: var(--white);
+        }
+        
+        .social-links a:hover {
+            background: var(--gold);
+            transform: translateY(-3px);
+            color: var(--dark);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .message-content {
+                padding: 1.5rem;
+            }
+            
+            .message-content::before {
+                font-size: 5rem;
+                top: -1.5rem;
+            }
+            
+            .media-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .inspiration-content h2 {
+                font-size: 2rem;
+            }
+            
+            .verse {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo-container">
+                <img src="logo.jpeg" alt="Logo MJSA" class="logo">
+                <div class="logo-text">
+                    <h1>MJSA</h1>
+                    <p>Mouvement des Jeunes au Service de l'Autel<br>Paroisse Sainte Anne de Port-Bouët</p>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#apropos">À propos</a></li>
+                    <li><a href="#message">Mot du Responsable</a></li>
+                    <li><a href="#bibliotheque">Bibliothèque</a></li>
+                    <li><a href="#inscription">Inscription</a></li>
+                    <li><a href="#inspiration">Inspiration</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Slider -->
+    <section id="accueil" class="slider-container">
+        <div class="slider">
+            <div class="slide">
+                <img src="slide1.jpg" alt="Activités MJSA">
+                <div class="slide-content">
+                    <h2>Bienvenue au MJSA</h2>
+                    <p>Rejoignez notre mouvement pour servir avec foi et dévotion</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="slide2.jpg" alt="Retraite spirituelle">
+                <div class="slide-content">
+                    <h2>Retraite Spirituelle Annuelle</h2>
+                    <p>Renforcez votre foi et votre engagement</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="slide3.jpg" alt="Formation des servants">
+                <div class="slide-content">
+                    <h2>Formation Continue</h2>
+                    <p>Améliorez vos compétences pour mieux servir</p>
+                </div>
+            </div>
+        </div>
+        <div class="slider-nav">
+            <button class="prev-btn">&#10094;</button>
+            <button class="next-btn">&#10095;</button>
+        </div>
+        <div class="slider-dots">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </section>
+
+    <!-- À propos -->
+    <section id="apropos" class="section">
+        <div class="section-title">
+            <h2>À propos du MJSA</h2>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Le Mouvement des Jeunes au Service de l'Autel (MJSA) de la Paroisse Sainte Anne de Port-Bouët est une organisation catholique qui rassemble des jeunes désireux de servir Dieu et l'Église à travers le service liturgique. Fondé en [année de fondation], le MJSA a pour mission de former des servants d'autel compétents, pieux et engagés dans leur foi.</p>
+                <p>Notre mouvement offre une formation spirituelle, liturgique et humaine aux jeunes qui souhaitent participer activement à la célébration eucharistique. Nous organisons régulièrement des retraites, des sessions de formation et des activités communautaires pour renforcer la fraternité parmi nos membres.</p>
+            </div>
+            <div class="about-image">
+                <img src="about-image.jpg" alt="Groupe MJSA">
+            </div>
+        </div>
+    </section>
+
+    <!-- Mot du Responsable -->
+    <section id="message" class="message-section">
+        <img src="church-bg.jpg" alt="Background" class="message-bg">
+        <div class="message-container">
+            <h2>Mot du Responsable</h2>
+            <div class="message-content">
+                <p>Chers jeunes servants, chers parents, chers membres de notre communauté paroissiale,</p>
+                
+                <p>En cette année dédiée à la jeunesse et au service liturgique, je tiens à vous exprimer toute ma gratitude pour votre engagement au sein du Mouvement des Jeunes au Service de l'Autel de la Paroisse Sainte Anne de Port-Bouët.</p>
+                
+                <p>Servir à l'autel n'est pas simplement une activité parmi d'autres, c'est une vocation sacrée qui vous rapproche chaque jour un peu plus du mystère eucharistique. À travers votre service, vous devenez des témoins vivants de la foi pour toute l'assemblée.</p>
+                
+                <div class="signature">R. BROU Axel-mary oswald</div>
+                <div class="responsable-title">Responsable du MJSA - Sainte Anne de Port-Bouët</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bibliothèque Média -->
+    <section id="bibliotheque" class="section media-library">
+        <div class="section-title">
+            <h2>Bibliothèque Média</h2>
+        </div>
+        <p style="text-align: center; margin-bottom: 2rem; color: var(--secondary);">Découvrez nos photos et vidéos des activités du MJSA</p>
+        
+        <div class="media-gallery">
+            <div class="media-item">
+                <div class="media-thumbnail">
+                    <img src="gbpnhi.jpeg" alt="Célébration eucharistique">
+                </div>
+                <div class="media-info">
+                    <h3>photo avec le gbonhi des magnifique enfants de choeur</h3>
+                    <div class="media-meta">
+                        <span>13 juillet. 2025</span>
+                        <span class="media-type photo">Photo</span>
+                    </div>
+                    <a href="#" class="view-btn">Voir</a>
+                </div>
+            </div>
+            
+            <div class="media-item">
+                <div class="media-thumbnail">
+                    <img src="soutanelle.jpeg" alt="Retraite spirituelle">
+                </div>
+                <div class="media-info">
+                    <h3>les nouveaux servants de l'année pastorale 2024-2025</h3>
+                    <div class="media-meta">
+                        <span>13 juillet 2025</span>
+                        <span class="media-type photo">Photo</span>
+                    </div>
+                    <a href="#" class="view-btn">Voir</a>
+                </div>
+            </div>
+            
+            <div class="media-item">
+                <div class="media-thumbnail">
+                    <img src="les promettants.jpeg" alt="Formation des servants">
+                </div>
+                <div class="media-info">
+                    <h3>Les nouveaux promettants/h3>
+                    <div class="media-meta">
+                        <span>13 juillet 2025</span>
+                        <span class="media-type photo">Photo</span>
+                    </div>
+                    <a href="#" class="view-btn">Voir</a>
+                </div>
+            </div>
+            
+            <div class="media-item">
+                <div class="media-thumbnail">
+                    <img src="catholique.jpeg" alt="Pèlerinage annuel">
+                </div>
+                <div class="media-info">
+                    <h3>Quelque autre servants</h3>
+                    <div class="media-meta">
+                        <span>18 Avril. 2025</span>
+                         <span class="media-type photo">Photo</span>
+                    </div>
+                    <a href="#" class="view-btn">Voir</a>
+                </div>
+            </div>
+            
+            <div class="media-item">
+                <div class="media-thumbnail">
+                    <img src="tarcisus.jpeg" alt="Fête de Noël">
+                </div>
+                <div class="media-info">
+                    <h3>Notre saint patron </h3>
+                    <h3>Saint tarcisus </h3>
+                    <div class="media-meta">
+                        <span>24 Déc. 2022</span>
+                        <span class="media-type photo">Photo</span>
+                    </div>
+                    <a href="#" class="view-btn">Voir</a>
+                </div>
+            </div>
+            
+            <div class="media-item">
+                <div class="media-thumbnail">
+                    <img src="gallery6.jpg" alt="Ordination">
+                </div>
+                <div class="media-info">
+                    <h3>Ordination Diaconale</h3>
+                    <div class="media-meta">
+                        <span>15 Mai 2022</span>
+                        <span class="media-type video">Vidéo</span>
+                    </div>
+                    <a href="#" class="view-btn">Voir</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inscription -->
+    <section id="inscription" class="section form-section">
+        <div class="form-container">
+            <div class="form-header">
+                <h2>Inscription au MJSA</h2>
+                <p>Rejoignez notre mouvement en remplissant ce formulaire</p>
+            </div>
+            
+            <form id="registration-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nom">Nom</label>
+                        <input type="text" id="nom" name="nom" required placeholder="Votre nom de famille">
+                    </div>
+                    <div class="form-group">
+                        <label for="prenom">Prénom</label>
+                        <input type="text" id="prenom" name="prenom" required placeholder="Votre prénom">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date-naissance">Date de naissance</label>
+                        <input type="date" id="date-naissance" name="date-naissance" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Âge</label>
+                        <input type="number" id="age" name="age" min="6" max="25" required placeholder="Votre âge">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="adresse">Adresse complète</label>
+                    <input type="text" id="adresse" name="adresse" required placeholder="Votre adresse">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ville">Ville</label>
+                        <input type="text" id="ville" name="ville" value="Port-Bouët" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="paroisse">Paroisse</label>
+                        <input type="text" id="paroisse" name="paroisse" value="Sainte Anne de Port-Bouët" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="parent-nom">Nom du parent/tuteur</label>
+                        <input type="text" id="parent-nom" name="parent-nom" required placeholder="Nom complet du parent">
+                    </div>
+                    <div class="form-group">
+                        <label for="parent-tel">Téléphone du parent/tuteur</label>
+                        <input type="tel" id="parent-tel" name="parent-tel" required placeholder="Numéro de téléphone">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email (si disponible)</label>
+                    <input type="email" id="email" name="email" placeholder="Votre email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="motivation">Pourquoi souhaitez-vous rejoindre le MJSA?</label>
+                    <textarea id="motivation" name="motivation" rows="4" placeholder="Décrivez vos motivations..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Soumettre l'inscription</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Section Inspirante -->
+    <section id="inspiration" class="inspiration-section">
+        <div class="inspiration-content">
+            <h2>Votre Service, Une Vocation</h2>
+            <p>Servir à l'autel est un privilège et une grâce. À travers ce ministère, vous participez activement à la liturgie et devenez des témoins de la foi pour toute la communauté.</p>
+            
+            <div class="verse">
+                "Comme je suis heureux de ceux qui habitent ta maison et qui peuvent te louer sans cesse !"
+            </div>
+            
+            <p>Le MJSA vous offre une formation complète pour grandir spirituellement tout en apprenant à servir avec dignité et piété. Rejoignez-nous dans cette belle aventure de foi !</p>
+            
+            <a href="#inscription" class="cta-button">Nous Rejoindre</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>MJSA</h3>
+                <p>Mouvement des Jeunes au Service de l'Autel<br>Paroisse Sainte Anne de Port-Bouët</p>
+                <div class="social-links">
+                    <a href="#"><i>📱</i></a>
+                    <a href="#"><i>📘</i></a>
+                    <a href="#"><i>📸</i></a>
+                    <a href="#"><i>🐦</i></a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Liens Rapides</h3>
+                <ul class="footer-links">
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#apropos">À propos</a></li>
+                    <li><a href="#message">Mot du Responsable</a></li>
+                    <li><a href="#bibliotheque">Bibliothèque</a></li>
+                    <li><a href="#inscription">Inscription</a></li>
+                    <li><a href="#inspiration">Inspiration</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Contact</h3>
+                <p><i>📍</i> Paroisse Sainte Anne de Port-Bouët<br>Abidjan, Côte d'Ivoire</p>
+                <p><i>📞</i> +225 01 52 99 91 26</p>
+                <p><i>📧</i> mjsa.sainteanne@gmail.com</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 MJSA - Mouvement des Jeunes au Service de l'Autel - Sainte Anne de Port-Bouët. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Script pour le slider
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        const totalSlides = slides.length;
+        
+        function showSlide(index) {
+            if (index >= totalSlides) {
+                currentSlide = 0;
+            } else if (index < 0) {
+                currentSlide = totalSlides - 1;
+            } else {
+                currentSlide = index;
+            }
+            
+            const slider = document.querySelector('.slider');
+            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            // Mettre à jour les dots
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+        }
+        
+        document.querySelector('.next-btn').addEventListener('click', () => {
+            showSlide(currentSlide + 1);
+        });
+        
+        document.querySelector('.prev-btn').addEventListener('click', () => {
+            showSlide(currentSlide - 1);
+        });
+        
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                showSlide(i);
+            });
+        });
+        
+        // Auto-slide
+        setInterval(() => {
+            showSlide(currentSlide + 1);
+        }, 5000);
+    
+        // Gestion du formulaire
+        document.getElementById('registration-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validation simple
+            let isValid = true;
+            const requiredFields = this.querySelectorAll('[required]');
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = 'var(--danger)';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '#ced4da';
+                }
+            });
+
+            if (!isValid) {
+                alert('Veuillez remplir tous les champs obligatoires.');
+                return;
+            }
+            
+            // Simulation d'envoi
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'Envoi en cours...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                alert('Merci pour votre inscription! Nous vous contacterons bientôt.');
+                this.reset();
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 1500);
+        });
+        
+        // Calcul automatique de l'âge
+        document.getElementById('date-naissance').addEventListener('change', function() {
+            const birthDate = new Date(this.value);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            
+            document.getElementById('age').value = age;
+        });
+
+        // Galerie média - Lightbox (simplifié)
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const mediaItem = this.closest('.media-item');
+                const title = mediaItem.querySelector('h3').textContent;
+                
+                // Ici vous pouvez implémenter une vraie lightbox
+                alert(`Ouverture de: ${title}\n\nEn production, cela afficherait une lightbox ou une vidéo.`);
+            });
+        });
+    </script>
+</body>
+</html>

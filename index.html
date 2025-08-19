@@ -1124,36 +1124,71 @@
                 <h2>Inscription au MJSA</h2>
                 <p>Rejoignez notre mouvement en remplissant ce formulaire</p>
             </div>
-            
             <script>
-const form = document.getElementById('registration-form');
-
-form.addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const data = {
-        nom: document.getElementById('nom').value,
-        prenom: document.getElementById('prenom').value,
-        'date-naissance': document.getElementById('date-naissance').value,
-        age: document.getElementById('age').value,
-        adresse: document.getElementById('adresse').value,
-        ville: document.getElementById('ville').value,
-        paroisse: document.getElementById('paroisse').value,
-        'parent-nom': document.getElementById('parent-nom').value,
-        'parent-tel': document.getElementById('parent-tel').value,
-        email: document.getElementById('email').value,
-        motivation: document.getElementById('motivation').value
-    };
-
-    fetch('TON_URL_DE_WEB_APP_ICI', {
-        method: 'POST',
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(result => alert("Inscription enregistrée avec succès !"))
-    .catch(error => alert("Erreur : " + error));
-});
-</script>
+           <form id="registration-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nom">Nom</label>
+                        <input type="text" id="nom" name="nom" required placeholder="Votre nom de famille">
+                    </div>
+                    <div class="form-group">
+                        <label for="prenom">Prénom</label>
+                        <input type="text" id="prenom" name="prenom" required placeholder="Votre prénom">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date-naissance">Date de naissance</label>
+                        <input type="date" id="date-naissance" name="date-naissance" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Âge</label>
+                        <input type="number" id="age" name="age" min="6" max="25" required placeholder="Votre âge">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="adresse">Adresse complète</label>
+                    <input type="text" id="adresse" name="adresse" required placeholder="Votre adresse">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ville">Ville</label>
+                        <input type="text" id="ville" name="ville" value="Port-Bouët" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="paroisse">Paroisse</label>
+                        <input type="text" id="paroisse" name="paroisse" value="Sainte Anne de Port-Bouët" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="parent-nom">Nom du parent/tuteur</label>
+                        <input type="text" id="parent-nom" name="parent-nom" required placeholder="Nom complet du parent">
+                    </div>
+                    <div class="form-group">
+                        <label for="parent-tel">Téléphone du parent/tuteur</label>
+                        <input type="tel" id="parent-tel" name="parent-tel" required placeholder="Numéro de téléphone">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email (si disponible)</label>
+                    <input type="email" id="email" name="email" placeholder="Votre email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="motivation">Pourquoi souhaitez-vous rejoindre le MJSA?</label>
+                    <textarea id="motivation" name="motivation" rows="4" placeholder="Décrivez vos motivations..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Soumettre l'inscription</button>
+            </form>
+        </div>
+    </section>
 
 
     <!-- Section Inspirante -->

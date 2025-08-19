@@ -2,7 +2,8 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Amélioration du viewport pour mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <title>MJSA - Mouvement des Jeunes au Service de l'Autel</title>
     <style>
         /* CSS Reset et styles de base */
@@ -17,6 +18,7 @@
             background-color: #f8f9fa;
             color: #343a40;
             line-height: 1.6;
+            overflow-x: hidden; /* Empêche le défilement horizontal */
         }
         
         a {
@@ -54,49 +56,62 @@
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 1rem; /* Réduction du padding sur mobile */
+            flex-wrap: wrap; /* Permet l'adaptation sur mobile */
         }
         
         .logo-container {
             display: flex;
             align-items: center;
+            flex: 1;
+            min-width: 0; /* Important pour le responsive */
         }
         
         .logo {
-            width: 80px;
-            height: 80px;
-            margin-right: 1rem;
+            width: 60px; /* Taille réduite pour mobile */
+            height: 60px; /* Taille réduite pour mobile */
+            margin-right: 0.8rem;
             object-fit: contain;
         }
         
         .logo-text h1 {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.5rem; /* Taille réduite pour mobile */
+            margin-bottom: 0.3rem;
             color: var(--white);
         }
         
         .logo-text p {
-            font-size: 0.9rem;
+            font-size: 0.8rem; /* Taille réduite pour mobile */
             opacity: 0.9;
             color: rgba(255, 255, 255, 0.8);
+            line-height: 1.3;
         }
         
         /* Navigation */
+        nav {
+            width: 100%; /* Prend toute la largeur sur mobile */
+            order: 3; /* Change l'ordre d'affichage */
+            margin-top: 1rem;
+        }
+        
         nav ul {
             display: flex;
             list-style: none;
+            flex-wrap: wrap; /* Permet le retour à la ligne */
+            justify-content: center; /* Centre les éléments */
         }
         
         nav ul li {
-            margin-left: 1.5rem;
+            margin: 0.3rem 0.5rem; /* Marge réduite pour mobile */
         }
         
         nav ul li a {
             font-weight: 500;
             transition: all 0.3s ease;
-            padding: 0.5rem 0;
+            padding: 0.3rem 0;
             position: relative;
             color: var(--white);
+            font-size: 0.9rem; /* Taille réduite pour mobile */
         }
         
         nav ul li a:hover {
@@ -118,10 +133,31 @@
             width: 100%;
         }
         
+        /* Menu hamburger pour mobile */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+        
+        .menu-toggle span {
+            width: 100%;
+            height: 3px;
+            background-color: var(--white);
+            border-radius: 5px;
+            transition: all 0.3s linear;
+        }
+        
         /* Slider */
         .slider-container {
             max-width: 1200px;
-            margin: 2rem auto;
+            margin: 1rem auto; /* Marge réduite pour mobile */
             position: relative;
             overflow: hidden;
             border-radius: 8px;
@@ -131,7 +167,8 @@
         .slider {
             display: flex;
             transition: transform 0.5s ease;
-            height: 400px;
+            height: 50vh; /* Hauteur relative à l'écran */
+            max-height: 300px; /* Hauteur maximale sur mobile */
         }
         
         .slide {
@@ -152,12 +189,16 @@
             right: 0;
             background: rgba(0, 0, 0, 0.6);
             color: white;
-            padding: 1.5rem;
+            padding: 1rem; /* Padding réduit pour mobile */
         }
         
         .slide-content h2 {
-            margin-bottom: 0.5rem;
-            font-size: 1.8rem;
+            margin-bottom: 0.3rem;
+            font-size: 1.2rem; /* Taille réduite pour mobile */
+        }
+        
+        .slide-content p {
+            font-size: 0.9rem; /* Taille réduite pour mobile */
         }
         
         .slider-nav {
@@ -167,16 +208,16 @@
             display: flex;
             justify-content: space-between;
             transform: translateY(-50%);
-            padding: 0 1rem;
+            padding: 0 0.5rem; /* Padding réduit pour mobile */
         }
         
         .slider-nav button {
             background: rgba(255, 255, 255, 0.7);
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 35px; /* Taille réduite pour mobile */
+            height: 35px; /* Taille réduite pour mobile */
             border-radius: 50%;
-            font-size: 1.2rem;
+            font-size: 1rem; /* Taille réduite pour mobile */
             cursor: pointer;
             transition: all 0.3s ease;
             color: var(--blue-dark);
@@ -188,18 +229,18 @@
         
         .slider-dots {
             position: absolute;
-            bottom: 1rem;
+            bottom: 0.5rem; /* Position ajustée pour mobile */
             left: 50%;
             transform: translateX(-50%);
             display: flex;
         }
         
         .dot {
-            width: 12px;
-            height: 12px;
+            width: 10px; /* Taille réduite pour mobile */
+            height: 10px; /* Taille réduite pour mobile */
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.5);
-            margin: 0 5px;
+            margin: 0 4px; /* Marge réduite pour mobile */
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -210,19 +251,19 @@
         
         /* Sections */
         .section {
-            padding: 3rem 2rem;
+            padding: 2rem 1rem; /* Padding réduit pour mobile */
             max-width: 1200px;
             margin: 0 auto;
         }
         
         .section-title {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem; /* Marge réduite pour mobile */
             position: relative;
         }
         
         .section-title h2 {
-            font-size: 2rem;
+            font-size: 1.8rem; /* Taille réduite pour mobile */
             color: var(--blue-dark);
             display: inline-block;
         }
@@ -230,10 +271,10 @@
         .section-title h2::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -8px; /* Position ajustée pour mobile */
             left: 50%;
             transform: translateX(-50%);
-            width: 80px;
+            width: 60px; /* Largeur réduite pour mobile */
             height: 3px;
             background: var(--gold);
         }
@@ -241,16 +282,17 @@
         /* A propos */
         .about-content {
             display: flex;
+            flex-direction: column; /* Colonne sur mobile */
             align-items: center;
-            gap: 2rem;
+            gap: 1.5rem; /* Espacement réduit pour mobile */
         }
         
         .about-text {
-            flex: 1;
+            width: 100%; /* Pleine largeur sur mobile */
         }
         
         .about-image {
-            flex: 1;
+            width: 100%; /* Pleine largeur sur mobile */
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -266,7 +308,7 @@
         .message-section {
             background: linear-gradient(135deg, var(--blue-dark), #3a56a8);
             color: white;
-            padding: 4rem 2rem;
+            padding: 2rem 1rem; /* Padding réduit pour mobile */
             position: relative;
             overflow: hidden;
         }
@@ -280,47 +322,48 @@
         }
         
         .message-container h2 {
-            font-size: 2.2rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.8rem; /* Taille réduite pour mobile */
+            margin-bottom: 1rem; /* Marge réduite pour mobile */
             color: var(--gold);
         }
         
         .message-content {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
+            border-radius: 8px; /* Border-radius réduit pour mobile */
+            padding: 1.5rem; /* Padding réduit pour mobile */
+            margin-bottom: 1.5rem; /* Marge réduite pour mobile */
             position: relative;
         }
         
         .message-content::before {
             content: '"';
-            font-size: 8rem;
+            font-size: 5rem; /* Taille réduite pour mobile */
             position: absolute;
-            top: -3rem;
-            left: -1rem;
+            top: -2rem; /* Position ajustée pour mobile */
+            left: -0.5rem; /* Position ajustée pour mobile */
             color: rgba(255, 255, 255, 0.1);
             font-family: serif;
             line-height: 1;
         }
         
         .message-content p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
+            font-size: 1rem; /* Taille réduite pour mobile */
+            line-height: 1.6; /* Line-height réduit pour mobile */
+            margin-bottom: 1rem; /* Marge réduite pour mobile */
         }
         
         .signature {
             font-family: 'Brush Script MT', cursive;
-            font-size: 2rem;
+            font-size: 1.5rem; /* Taille réduite pour mobile */
             color: var(--gold);
-            margin-top: 1rem;
+            margin-top: 0.5rem; /* Marge réduite pour mobile */
         }
         
         .responsable-title {
             font-style: italic;
             opacity: 0.9;
+            font-size: 0.9rem; /* Taille réduite pour mobile */
         }
         
         .message-bg {
@@ -341,9 +384,9 @@
         
         .media-gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
+            grid-template-columns: 1fr; /* 1 colonne sur mobile */
+            gap: 1rem; /* Espacement réduit pour mobile */
+            margin-top: 1.5rem; /* Marge réduite pour mobile */
         }
         
         .media-item {
@@ -356,12 +399,12 @@
         }
         
         .media-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px); /* Effet réduit pour mobile */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
         
         .media-thumbnail {
-            height: 250px;
+            height: 200px; /* Hauteur réduite pour mobile */
             overflow: hidden;
         }
         
@@ -377,27 +420,28 @@
         }
         
         .media-info {
-            padding: 1.5rem;
+            padding: 1rem; /* Padding réduit pour mobile */
         }
         
         .media-info h3 {
             margin-bottom: 0.5rem;
             color: var(--blue-dark);
+            font-size: 1.1rem; /* Taille réduite pour mobile */
         }
         
         .media-meta {
             display: flex;
             justify-content: space-between;
             color: var(--secondary);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
+            font-size: 0.8rem; /* Taille réduite pour mobile */
+            margin-bottom: 0.8rem; /* Marge réduite pour mobile */
         }
         
         .media-type {
             display: inline-block;
-            padding: 0.3rem 0.8rem;
+            padding: 0.2rem 0.6rem; /* Padding réduit pour mobile */
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.75rem; /* Taille réduite pour mobile */
             font-weight: bold;
         }
         
@@ -415,9 +459,9 @@
             display: inline-block;
             background: var(--primary);
             color: white;
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.8rem; /* Padding réduit pour mobile */
             border-radius: 4px;
-            font-size: 0.9rem;
+            font-size: 0.85rem; /* Taille réduite pour mobile */
             transition: all 0.3s ease;
         }
         
@@ -433,7 +477,7 @@
         .form-container {
             background: var(--white);
             border-radius: 8px;
-            padding: 2.5rem;
+            padding: 1.5rem; /* Padding réduit pour mobile */
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
             max-width: 800px;
             margin: 0 auto;
@@ -442,37 +486,40 @@
         
         .form-header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem; /* Marge réduite pour mobile */
         }
         
         .form-header h2 {
             color: var(--blue-dark);
             margin-bottom: 0.5rem;
+            font-size: 1.5rem; /* Taille réduite pour mobile */
         }
         
         .form-header p {
             color: var(--secondary);
+            font-size: 0.9rem; /* Taille réduite pour mobile */
         }
         
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem; /* Marge réduite pour mobile */
         }
         
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem; /* Marge réduite pour mobile */
             font-weight: 500;
             color: var(--dark);
+            font-size: 0.9rem; /* Taille réduite pour mobile */
         }
         
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 0.8rem 1rem;
+            padding: 0.7rem 0.8rem; /* Padding réduit pour mobile */
             border: 1px solid #ced4da;
             border-radius: 6px;
-            font-size: 1rem;
+            font-size: 0.9rem; /* Taille réduite pour mobile */
             transition: all 0.3s ease;
             background-color: var(--white);
         }
@@ -487,11 +534,12 @@
         
         .form-row {
             display: flex;
-            gap: 1.5rem;
+            flex-direction: column; /* Colonne sur mobile */
+            gap: 0; /* Pas d'espacement sur mobile */
         }
         
         .form-row .form-group {
-            flex: 1;
+            width: 100%; /* Pleine largeur sur mobile */
         }
         
         .submit-btn {
@@ -500,13 +548,13 @@
             background: linear-gradient(to right, var(--primary), var(--blue-dark));
             color: white;
             border: none;
-            padding: 1rem;
-            font-size: 1.1rem;
+            padding: 0.8rem; /* Padding réduit pour mobile */
+            font-size: 1rem; /* Taille réduite pour mobile */
             font-weight: 500;
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 1.5rem;
+            margin-top: 1rem; /* Marge réduite pour mobile */
         }
         
         .submit-btn:hover {
@@ -517,7 +565,7 @@
         /* Section Inspirante */
         .inspiration-section {
             background: url('inspiration-bg.jpg') center/cover no-repeat;
-            padding: 6rem 2rem;
+            padding: 3rem 1rem; /* Padding réduit pour mobile */
             text-align: center;
             color: white;
             position: relative;
@@ -541,41 +589,41 @@
         }
         
         .inspiration-content h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.8rem; /* Taille réduite pour mobile */
+            margin-bottom: 1rem; /* Marge réduite pour mobile */
             color: var(--gold);
         }
         
         .inspiration-content p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            line-height: 1.8;
+            font-size: 1rem; /* Taille réduite pour mobile */
+            margin-bottom: 1.5rem; /* Marge réduite pour mobile */
+            line-height: 1.6; /* Line-height réduit pour mobile */
         }
         
         .verse {
             font-style: italic;
-            font-size: 1.3rem;
-            margin: 2rem 0;
+            font-size: 1.1rem; /* Taille réduite pour mobile */
+            margin: 1.5rem 0; /* Marge réduite pour mobile */
             position: relative;
-            padding: 0 2rem;
+            padding: 0 1.5rem; /* Padding réduit pour mobile */
             color: rgba(255, 255, 255, 0.9);
         }
         
         .verse::before,
         .verse::after {
             content: '"';
-            font-size: 3rem;
+            font-size: 2rem; /* Taille réduite pour mobile */
             position: absolute;
             color: rgba(212, 175, 55, 0.3);
         }
         
         .verse::before {
-            top: -1rem;
+            top: -0.8rem; /* Position ajustée pour mobile */
             left: 0;
         }
         
         .verse::after {
-            bottom: -2rem;
+            bottom: -1.5rem; /* Position ajustée pour mobile */
             right: 0;
         }
         
@@ -583,13 +631,13 @@
             display: inline-block;
             background: linear-gradient(to right, var(--gold), #b8860b);
             color: var(--dark);
-            padding: 1rem 2.5rem;
+            padding: 0.8rem 1.5rem; /* Padding réduit pour mobile */
             border-radius: 50px;
-            font-size: 1.1rem;
+            font-size: 0.9rem; /* Taille réduite pour mobile */
             font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 1rem;
+            letter-spacing: 0.5px; /* Letter-spacing réduit pour mobile */
+            margin-top: 0.5rem; /* Marge réduite pour mobile */
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
@@ -604,21 +652,21 @@
         footer {
             background: var(--blue-dark);
             color: var(--white);
-            padding: 3rem 0 1rem;
+            padding: 2rem 0 1rem; /* Padding réduit pour mobile */
         }
         
         .footer-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 1rem; /* Padding réduit pour mobile */
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            grid-template-columns: 1fr; /* 1 colonne sur mobile */
+            gap: 1.5rem; /* Espacement réduit pour mobile */
         }
         
         .footer-col h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.1rem; /* Taille réduite pour mobile */
+            margin-bottom: 1rem; /* Marge réduite pour mobile */
             position: relative;
             padding-bottom: 0.5rem;
             color: var(--white);
@@ -629,15 +677,16 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 50px;
+            width: 40px; /* Largeur réduite pour mobile */
             height: 2px;
             background: var(--gold);
         }
         
         .footer-col p {
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem; /* Marge réduite pour mobile */
             opacity: 0.8;
             color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem; /* Taille réduite pour mobile */
         }
         
         .footer-links {
@@ -645,13 +694,14 @@
         }
         
         .footer-links li {
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.5rem; /* Marge réduite pour mobile */
         }
         
         .footer-links a {
             opacity: 0.8;
             transition: opacity 0.3s ease;
             color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem; /* Taille réduite pour mobile */
         }
         
         .footer-links a:hover {
@@ -661,20 +711,21 @@
         
         .social-links {
             display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
+            gap: 0.8rem; /* Espacement réduit pour mobile */
+            margin-top: 0.8rem; /* Marge réduite pour mobile */
         }
         
         .social-links a {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            width: 35px; /* Taille réduite pour mobile */
+            height: 35px; /* Taille réduite pour mobile */
             background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             transition: all 0.3s ease;
             color: var(--white);
+            font-size: 1rem; /* Taille réduite pour mobile */
         }
         
         .social-links a:hover {
@@ -685,59 +736,185 @@
         
         .copyright {
             text-align: center;
-            padding-top: 2rem;
-            margin-top: 2rem;
+            padding-top: 1.5rem; /* Padding réduit pour mobile */
+            margin-top: 1.5rem; /* Marge réduite pour mobile */
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             opacity: 0.7;
-            font-size: 0.9rem;
+            font-size: 0.8rem; /* Taille réduite pour mobile */
             color: rgba(255, 255, 255, 0.7);
         }
         
-        /* Responsive */
-        @media (max-width: 768px) {
+        /* ============================ */
+        /* MEDIA QUERIES POUR RESPONSIVE */
+        /* ============================ */
+        
+        /* Tablettes en mode portrait */
+        @media (min-width: 481px) {
             .header-container {
-                flex-direction: column;
-                text-align: center;
+                padding: 0 1.5rem;
+            }
+            
+            .logo {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .logo-text h1 {
+                font-size: 1.6rem;
             }
             
             nav ul {
-                margin-top: 1rem;
-                flex-direction: column;
-                align-items: center;
+                justify-content: flex-end;
             }
             
             nav ul li {
-                margin: 0.5rem 0;
+                margin: 0 0.8rem;
             }
             
-            .about-content {
-                flex-direction: column;
-            }
-            
-            .message-content {
-                padding: 1.5rem;
-            }
-            
-            .message-content::before {
-                font-size: 5rem;
-                top: -1.5rem;
+            .slider {
+                max-height: 350px;
             }
             
             .media-gallery {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Tablettes en mode paysage et petits ordinateurs */
+        @media (min-width: 769px) {
+            .header-container {
+                flex-wrap: nowrap;
+                padding: 0 2rem;
+            }
+            
+            nav {
+                width: auto;
+                order: initial;
+                margin-top: 0;
+            }
+            
+            .menu-toggle {
+                display: none;
+            }
+            
+            .logo {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .logo-text h1 {
+                font-size: 1.8rem;
+            }
+            
+            .logo-text p {
+                font-size: 0.9rem;
+            }
+            
+            nav ul li a {
+                font-size: 1rem;
+            }
+            
+            .slider {
+                height: 400px;
+                max-height: none;
+            }
+            
+            .slide-content {
+                padding: 1.5rem;
+            }
+            
+            .slide-content h2 {
+                font-size: 1.8rem;
+            }
+            
+            .section {
+                padding: 3rem 2rem;
+            }
+            
+            .about-content {
+                flex-direction: row;
+            }
+            
+            .media-gallery {
+                grid-template-columns: repeat(3, 1fr);
             }
             
             .form-row {
-                flex-direction: column;
-                gap: 0;
+                flex-direction: row;
+                gap: 1.5rem;
             }
             
-            .inspiration-content h2 {
-                font-size: 2rem;
+            .footer-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        /* Ordinateurs de bureau */
+        @media (min-width: 1025px) {
+            .header-container {
+                padding: 0 2rem;
             }
             
-            .verse {
-                font-size: 1.1rem;
+            .section {
+                padding: 4rem 2rem;
+            }
+        }
+        
+        /* Très grands écrans */
+        @media (min-width: 1201px) {
+            .header-container {
+                padding: 0;
+            }
+        }
+        
+        /* Correction spécifique pour les très petits mobiles */
+        @media (max-width: 360px) {
+            .logo-text h1 {
+                font-size: 1.3rem;
+            }
+            
+            .logo-text p {
+                font-size: 0.7rem;
+            }
+            
+            nav ul li {
+                margin: 0.2rem 0.3rem;
+            }
+            
+            nav ul li a {
+                font-size: 0.8rem;
+            }
+            
+            .slider {
+                max-height: 250px;
+            }
+            
+            .slide-content h2 {
+                font-size: 1rem;
+            }
+            
+            .slide-content p {
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Correction de l'orientation paysage sur mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .slider {
+                height: 70vh;
+                max-height: 250px;
+            }
+            
+            header {
+                padding: 0.5rem 0;
+            }
+            
+            .section {
+                padding: 1.5rem 1rem;
             }
         }
     </style>
@@ -753,7 +930,14 @@
                     <p>Mouvement des Jeunes au Service de l'Autel<br>Paroisse Sainte Anne de Port-Bouët</p>
                 </div>
             </div>
-            <nav>
+            
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <nav id="main-nav">
                 <ul>
                     <li><a href="#accueil">Accueil</a></li>
                     <li><a href="#apropos">À propos</a></li>
@@ -766,6 +950,7 @@
         </div>
     </header>
 
+    <!-- Le reste du code reste inchangé mais bénéficiera des corrections CSS -->
     <!-- Slider -->
     <section id="accueil" class="slider-container">
         <div class="slider">
@@ -877,7 +1062,7 @@
                   <img src="les promettants/images/photo.jpg" alt="Formation des servants">
                 </div>
                 <div class="media-info">
-                    <h3>Les nouveaux promettants/h3>
+                    <h3>Les nouveaux promettants</h3>
                     <div class="media-meta">
                         <span>13 juillet 2025</span>
                         <span class="media-type photo">Photo</span>
@@ -1164,6 +1349,15 @@
                 // Ici vous pouvez implémenter une vraie lightbox
                 alert(`Ouverture de: ${title}\n\nEn production, cela afficherait une lightbox ou une vidéo.`);
             });
+        });
+        
+        // Menu mobile toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const mainNav = document.getElementById('main-nav');
+        
+        menuToggle.addEventListener('click', function() {
+            mainNav.classList.toggle('active');
+            this.classList.toggle('active');
         });
     </script>
 </body>

@@ -4,33 +4,21 @@ document.addEventListener("DOMContentLoaded", function () {
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    // Récupérer les données du formulaire
-    const data = {
-      nom: document.getElementById("nom").value,
-      prenom: document.getElementById("prenom").value,
-      "date-naissance": document.getElementById("date-naissance").value,
-      age: document.getElementById("age").value,
-      adresse: document.getElementById("adresse").value,
-      ville: document.getElementById("ville").value,
-      paroisse: document.getElementById("paroisse").value,
-      "parent-nom": document.getElementById("parent-nom").value,
-      "parent-tel": document.getElementById("parent-tel").value,
-      email: document.getElementById("email").value,
-      motivation: document.getElementById("motivation").value,
-    };
-
-    // ⚠️ Ici tu dois remplacer l’URL par celle de ton Web App Google Apps Script
+    // ⚠️ Remplace par ton URL Web App
     const scriptURL = "https://script.google.com/macros/s/AKfycbwUZwEf5BEaC2emhDUxN7qwpuVw_0xsOctLSOLXYgZ8k-YiVZp9w8zmU_9wKZSitOcj/exec";
 
-    // Envoi vers Google Sheet
+    // Envoi vers Google Sheet via FormData
     fetch(scriptURL, {
       method: "POST",
-      body: JSON.stringify(data),
+      body: new FormData(form),
     })
-      .then((response) => response.json())
-      .then((result) => {
-        alert("✅ Inscription enregistrée avec succès !");
-        form.reset(); // vide le formulaire après envoi
+      .then((response) => {
+        if (response.ok) {
+          alert("✅ Inscription enregistrée avec succès !");
+          form.reset(); // vider le formulaire après envoi
+        } else {
+          alert("❌ Erreur : " + response.statusText);
+        }
       })
       .catch((error) => {
         alert("❌ Erreur lors de l'envoi : " + error);

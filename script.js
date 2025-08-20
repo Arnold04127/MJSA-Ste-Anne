@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     // ⚠️ Ici tu dois remplacer l’URL par celle de ton Web App Google Apps Script
-    const scriptURL = "https://script.google.com/macros/s/AKfycbzoYGhN38POiW8JFu4wWvVVn-vSt_NFjoW-YOVvqUyST380HImQFTVKt25GqL4t76yc/exec";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwUZwEf5BEaC2emhDUxN7qwpuVw_0xsOctLSOLXYgZ8k-YiVZp9w8zmU_9wKZSitOcj/exec";
 
     // Envoi vers Google Sheet
     fetch(scriptURL, {

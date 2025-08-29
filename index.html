@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -745,6 +745,62 @@
         }
         
         /* ============================ */
+        /* STYLES POUR L'AUTHENTIFICATION */
+        /* ============================ */
+        
+        .auth-container {
+            display: none;
+            background: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            max-width: 500px;
+            margin: 2rem auto;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .auth-container.active {
+            display: block;
+        }
+        
+        .welcome-message {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(to right, var(--primary), var(--blue-dark));
+            color: white;
+            border-radius: 8px;
+            margin: 2rem auto;
+            max-width: 800px;
+        }
+        
+        .welcome-message.active {
+            display: block;
+        }
+        
+        .welcome-message h2 {
+            margin-bottom: 1rem;
+            color: var(--gold);
+        }
+        
+        .logout-btn {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--dark);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .logout-btn:hover {
+            background: #b8860b;
+            transform: translateY(-2px);
+        }
+        
+        /* ============================ */
         /* MEDIA QUERIES POUR RESPONSIVE */
         /* ============================ */
         
@@ -950,7 +1006,6 @@
         </div>
     </header>
 
-    <!-- Le reste du code reste inchangé mais bénéficiera des corrections CSS -->
     <!-- Slider -->
     <section id="accueil" class="slider-container">
         <div class="slider">
@@ -987,6 +1042,36 @@
         </div>
     </section>
 
+    <!-- Message de bienvenue (apparaît après connexion) -->
+    <div id="welcome-message" class="welcome-message">
+        <h2>Bienvenue, <span id="user-name"></span> !</h2>
+        <p>Votre inscription a été enregistrée avec succès. Nous sommes ravis de vous compter parmi nous.</p>
+        <p>Vous pouvez maintenant accéder à toutes les fonctionnalités réservées aux membres du MJSA.</p>
+        <div class="logout-btn" id="logout-btn">Se déconnecter</div>
+    </div>
+
+    <!-- Formulaire de connexion (apparaît après inscription) -->
+    <div id="login-container" class="auth-container">
+        <div class="form-header">
+            <h2>Connexion</h2>
+            <p>Connectez-vous à votre compte MJSA</p>
+        </div>
+        
+        <form id="login-form">
+            <div class="form-group">
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" name="email" required placeholder="Votre email">
+            </div>
+            
+            <div class="form-group">
+                <label for="login-password">Mot de passe</label>
+                <input type="password" id="login-password" name="password" required placeholder="Votre mot de passe">
+            </div>
+            
+            <button type="submit" class="submit-btn">Se connecter</button>
+        </form>
+    </div>
+
     <!-- À propos -->
     <section id="apropos" class="section">
         <div class="section-title">
@@ -1014,7 +1099,7 @@
                 
                 <p>En cette année dédiée à la jeunesse et au service liturgique, je tiens à vous exprimer toute ma gratitude pour votre engagement au sein du Mouvement des Jeunes au Service de l'Autel de la Paroisse Sainte Anne de Port-Bouët.</p>
                 
-                <p>Servir à l'autel n'est pas simplement une activité parmi d'autres, c'est une vocation sacrée qui vous rapproche chaque jour un peu plus du mystère eucharistique. À travers votre service, vous devenez des témoins vivants de la foi pour toute l'assemblée.</p>
+                <p>Servir à l'autel n'est pas simplement une activité parmi d'autres, c'est une vocation sacrée qui vous rapproche chaque jour un peu plus du mystère eucharistique. À travers votre service, vous devenes des témoins vivants de la foi pour toute l'assemblée.</p>
                 
                 <div class="signature">R. BROU Axel-mary oswald</div>
                 <div class="responsable-title">Responsable du MJSA - Sainte Anne de Port-Bouët</div>
@@ -1165,7 +1250,7 @@
 
     <!-- Inscription -->
     <section id="inscription" class="section form-section">
-        <div class="form-container">
+        <div class="form-container" id="registration-container">
             <div class="form-header">
                 <h2>Inscription au MJSA</h2>
                 <p>Rejoignez notre mouvement en remplissant ce formulaire</p>
@@ -1224,6 +1309,11 @@
                 <div class="form-group">
                     <label for="email">Email (si disponible)</label>
                     <input type="email" id="email" name="email" placeholder="Votre email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Créez un mot de passe</label>
+                    <input type="password" id="password" name="password" required placeholder="Choisissez un mot de passe">
                 </div>
                 
                 <div class="form-group">
@@ -1336,7 +1426,7 @@
             showSlide(currentSlide + 1);
         }, 5000);
     
-        // Gestion du formulaire
+        // Gestion du formulaire d'inscription
         document.getElementById('registration-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -1366,11 +1456,71 @@
             submitBtn.disabled = true;
             
             setTimeout(() => {
-                alert('Merci pour votre inscription! Nous vous contacterons bientôt.');
-                this.reset();
+                // Récupérer les données du formulaire
+                const formData = {
+                    nom: document.getElementById('nom').value,
+                    prenom: document.getElementById('prenom').value,
+                    email: document.getElementById('email').value,
+                    password: document.getElementById('password').value
+                };
+                
+                // Stocker les données dans localStorage
+                localStorage.setItem('mjsa_user', JSON.stringify(formData));
+                
+                // Masquer le formulaire d'inscription
+                document.getElementById('registration-container').style.display = 'none';
+                
+                // Afficher le formulaire de connexion
+                document.getElementById('login-container').classList.add('active');
+                
+                alert('Votre inscription a été enregistrée avec succès! Veuillez maintenant vous connecter.');
+                
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
             }, 1500);
+        });
+        
+        // Gestion du formulaire de connexion
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Récupérer les données stockées
+            const storedUser = JSON.parse(localStorage.getItem('mjsa_user'));
+            
+            if (storedUser && storedUser.email === email && storedUser.password === password) {
+                // Connexion réussie
+                document.getElementById('login-container').classList.remove('active');
+                document.getElementById('welcome-message').classList.add('active');
+                document.getElementById('user-name').textContent = storedUser.prenom + ' ' + storedUser.nom;
+                
+                // Stocker l'état de connexion
+                localStorage.setItem('mjsa_loggedIn', 'true');
+            } else {
+                alert('Email ou mot de passe incorrect.');
+            }
+        });
+        
+        // Gestion de la déconnexion
+        document.getElementById('logout-btn').addEventListener('click', function() {
+            document.getElementById('welcome-message').classList.remove('active');
+            document.getElementById('registration-container').style.display = 'block';
+            localStorage.removeItem('mjsa_loggedIn');
+        });
+        
+        // Vérifier si l'utilisateur est déjà connecté au chargement de la page
+        window.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('mjsa_loggedIn');
+            const storedUser = JSON.parse(localStorage.getItem('mjsa_user'));
+            
+            if (isLoggedIn && storedUser) {
+                document.getElementById('registration-container').style.display = 'none';
+                document.getElementById('login-container').classList.remove('active');
+                document.getElementById('welcome-message').classList.add('active');
+                document.getElementById('user-name').textContent = storedUser.prenom + ' ' + storedUser.nom;
+            }
         });
         
         // Calcul automatique de l'âge

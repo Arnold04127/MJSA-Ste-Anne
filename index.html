@@ -1,1986 +1,3421 @@
 <!DOCTYPE html>
+
 <html lang="fr">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MJSA - Mouvement des Jeunes au Service de l'Autel</title>
-    <style>
-        /* CSS Reset et styles de base */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f8f9fa;
-            color: #343a40;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        /* Couleurs principales */
-        :root {
-            --primary: #2c7be5;
-            --secondary: #6c757d;
-            --success: #00d97e;
-            --info: #39afd1;
-            --warning: #f6c343;
-            --danger: #e63757;
-            --light: #f8f9fa;
-            --dark: #343a40;
-            --white: #ffffff;
-            --blue-dark: #1a2a6c;
-            --gold: #d4af37;
-        }
-        
-        /* Header */
-        header {
-            background: linear-gradient(135deg, var(--blue-dark), var(--primary));
-            color: var(--white);
-            padding: 1rem 0;
-            position: relative;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-            flex-wrap: wrap;
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            min-width: 0;
-        }
-        
-        .logo {
-            width: 60px;
-            height: 60px;
-            margin-right: 0.8rem;
-            background-color: var(--gold);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: var(--blue-dark);
-        }
-        
-        .logo-text h1 {
-            font-size: 1.5rem;
-            margin-bottom: 0.3rem;
-            color: var(--white);
-        }
-        
-        .logo-text p {
-            font-size: 0.8rem;
-            opacity: 0.9;
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.3;
-        }
-        
-        /* Navigation */
-        nav {
-            width: 100%;
-            order: 3;
-            margin-top: 1rem;
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        nav ul li {
-            margin: 0.3rem 0.5rem;
-        }
-        
-        nav ul li a {
-            font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 0.3rem 0;
-            position: relative;
-            color: var(--white);
-            font-size: 0.9rem;
-        }
-        
-        nav ul li a:hover {
-            color: var(--gold);
-        }
-        
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--gold);
-            transition: width 0.3s ease;
-        }
-        
-        nav ul li a:hover::after {
-            width: 100%;
-        }
-        
-        /* Menu hamburger pour mobile */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            justify-content: space-around;
-            width: 30px;
-            height: 25px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-        }
-        
-        .menu-toggle span {
-            width: 100%;
-            height: 3px;
-            background-color: var(--white);
-            border-radius: 5px;
-            transition: all 0.3s linear;
-        }
-        
-        /* Slider */
-        .slider-container {
-            max-width: 1200px;
-            margin: 1rem auto;
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .slider {
-            display: flex;
-            transition: transform 0.5s ease;
-            height: 50vh;
-            max-height: 300px;
-        }
-        
-        .slide {
-            min-width: 100%;
-            position: relative;
-        }
-        
-        .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .slide-content {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.6);
-            color: white;
-            padding: 1rem;
-        }
-        
-        .slide-content h2 {
-            margin-bottom: 0.3rem;
-            font-size: 1.2rem;
-        }
-        
-        .slide-content p {
-            font-size: 0.9rem;
-        }
-        
-        .slider-nav {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            transform: translateY(-50%);
-            padding: 0 0.5rem;
-        }
-        
-        .slider-nav button {
-            background: rgba(255, 255, 255, 0.7);
-            border: none;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: var(--blue-dark);
-        }
-        
-        .slider-nav button:hover {
-            background: white;
-        }
-        
-        .slider-dots {
-            position: absolute;
-            bottom: 0.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-        }
-        
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            margin: 0 4px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .dot.active {
-            background: white;
-        }
-        
-        /* Sections */
-        .section {
-            padding: 2rem 1rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-        
-        .section-title h2 {
-            font-size: 1.8rem;
-            color: var(--blue-dark);
-            display: inline-block;
-        }
-        
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background: var(--gold);
-        }
-        
-        /* A propos */
-        .about-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
-        }
-        
-        .about-text {
-            width: 100%;
-        }
-        
-        .about-image {
-            width: 100%;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .about-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-        
-        /* Mot du Responsable */
-        .message-section {
-            background: linear-gradient(135deg, var(--blue-dark), #3a56a8);
-            color: white;
-            padding: 2rem 1rem;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .message-container {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-            text-align: center;
-        }
-        
-        .message-container h2 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: var(--gold);
-        }
-        
-        .message-content {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-        
-        .message-content::before {
-            content: '"';
-            font-size: 5rem;
-            position: absolute;
-            top: -2rem;
-            left: -0.5rem;
-            color: rgba(255, 255, 255, 0.1);
-            font-family: serif;
-            line-height: 1;
-        }
-        
-        .message-content p {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-        
-        .signature {
-            font-family: 'Brush Script MT', cursive;
-            font-size: 1.5rem;
-            color: var(--gold);
-            margin-top: 0.5rem;
-        }
-        
-        .responsable-title {
-            font-style: italic;
-            opacity: 0.9;
-            font-size: 0.9rem;
-        }
-        
-        .message-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.2;
-            z-index: 1;
-        }
-        
-        /* Bibliothèque Média */
-        .media-library {
-            background: var(--light);
-        }
-        
-        .media-gallery {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-        
-        .media-item {
-            position: relative;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            background: var(--white);
-            cursor: pointer;
-        }
-        
-        .media-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        }
-        
-        .media-thumbnail {
-            height: 200px;
-            overflow: hidden;
-        }
-        
-        .media-thumbnail img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        
-        .media-item:hover .media-thumbnail img {
-            transform: scale(1.05);
-        }
-        
-        .media-info {
-            padding: 1rem;
-        }
-        
-        .media-info h3 {
-            margin-bottom: 0.5rem;
-            color: var(--blue-dark);
-            font-size: 1.1rem;
-        }
-        
-        .media-meta {
-            display: flex;
-            justify-content: space-between;
-            color: var(--secondary);
-            font-size: 0.8rem;
-            margin-bottom: 0.8rem;
-        }
-        
-        .media-type {
-            display: inline-block;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-        
-        .media-type.photo {
-            background: #e3f2fd;
-            color: #1976d2;
-        }
-        
-        .media-type.video {
-            background: #ffebee;
-            color: #d32f2f;
-        }
-        
-        .view-btn {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 0.4rem 0.8rem;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-        }
-        
-        .view-btn:hover {
-            background: var(--blue-dark);
-        }
-        
-        /* Formulaire d'inscription */
-        .form-section {
-            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
-        }
-        
-        .form-container {
-            background: var(--white);
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            max-width: 800px;
-            margin: 0 auto;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-        
-        .form-header {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-header h2 {
-            color: var(--blue-dark);
-            margin-bottom: 0.5rem;
-            font-size: 1.5rem;
-        }
-        
-        .form-header p {
-            color: var(--secondary);
-            font-size: 0.9rem;
-        }
-        
-        .form-group {
-            margin-bottom: 1rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.3rem;
-            font-weight: 500;
-            color: var(--dark);
-            font-size: 0.9rem;
-        }
-        
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.7rem 0.8rem;
-            border: 1px solid #ced4da;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            background-color: var(--white);
-        }
-        
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(44, 123, 229, 0.1);
-        }
-        
-        .form-row {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-        }
-        
-        .form-row .form-group {
-            width: 100%;
-        }
-        
-        .submit-btn {
-            display: block;
-            width: 100%;
-            background: linear-gradient(to right, var(--primary), var(--blue-dark));
-            color: white;
-            border: none;
-            padding: 0.8rem;
-            font-size: 1rem;
-            font-weight: 500;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 1rem;
-        }
-        
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Section Inspirante */
-        .inspiration-section {
-            background: url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
-            padding: 3rem 1rem;
-            text-align: center;
-            color: white;
-            position: relative;
-        }
-        
-        .inspiration-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(26, 42, 108, 0.85);
-        }
-        
-        .inspiration-content {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .inspiration-content h2 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: var(--gold);
-        }
-        
-        .inspiration-content p {
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-        
-        .verse {
-            font-style: italic;
-            font-size: 1.1rem;
-            margin: 1.5rem 0;
-            position: relative;
-            padding: 0 1.5rem;
-            color: rgba(255, 255, 255, 0.9);
-        }
-        
-        .verse::before,
-        .verse::after {
-            content: '"';
-            font-size: 2rem;
-            position: absolute;
-            color: rgba(212, 175, 55, 0.3);
-        }
-        
-        .verse::before {
-            top: -0.8rem;
-            left: 0;
-        }
-        
-        .verse::after {
-            bottom: -1.5rem;
-            right: 0;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(to right, var(--gold), #b8860b);
-            color: var(--dark);
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 0.5rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            color: var(--white);
-        }
-        
-        /* Footer */
-        footer {
-            background: var(--blue-dark);
-            color: var(--white);
-            padding: 2rem 0 1rem;
-        }
-        
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-        
-        .footer-col h3 {
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-            position: relative;
-            padding-bottom: 0.5rem;
-            color: var(--white);
-        }
-        
-        .footer-col h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background: var(--gold);
-        }
-        
-        .footer-col p {
-            margin-bottom: 0.8rem;
-            opacity: 0.8;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9rem;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 0.5rem;
-        }
-        
-        .footer-links a {
-            opacity: 0.8;
-            transition: opacity 0.3s ease;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9rem;
-        }
-        
-        .footer-links a:hover {
-            opacity: 1;
-            color: var(--gold);
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 0.8rem;
-            margin-top: 0.8rem;
-        }
-        
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 35px;
-            height: 35px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            color: var(--white);
-            font-size: 1rem;
-        }
-        
-        .social-links a:hover {
-            background: var(--gold);
-            transform: translateY(-3px);
-            color: var(--dark);
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 1.5rem;
-            margin-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            opacity: 0.7;
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        /* Styles pour l'authentification */
-        .auth-section {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(rgba(26, 42, 108, 0.8), rgba(26, 42, 108, 0.9));
-            padding: 2rem;
-        }
-        
-        .auth-container {
-            background: var(--white);
-            border-radius: 10px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            width: 100%;
-            max-width: 500px;
-        }
-        
-        .auth-header {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-        
-        .auth-header h2 {
-            color: var(--blue-dark);
-            margin-bottom: 0.5rem;
-            font-size: 1.5rem;
-        }
-        
-        .auth-header p {
-            color: var(--secondary);
-        }
-        
-        .form-switch {
-            text-align: center;
-            margin-top: 1.5rem;
-            color: var(--secondary);
-        }
-        
-        .form-switch a {
-            color: var(--primary);
-            font-weight: 500;
-            cursor: pointer;
-        }
-        
-        /* Message de bienvenue */
-        .welcome-banner {
-            background: linear-gradient(135deg, var(--blue-dark), #3a56a8);
-            color: white;
-            padding: 1.5rem;
-            text-align: center;
-            margin-bottom: 2rem;
-            border-radius: 0 0 10px 10px;
-        }
-        
-        .welcome-banner h2 {
-            margin-bottom: 0.5rem;
-            color: var(--gold);
-        }
-        
-        /* Site Content */
-        .site-content {
-            display: none;
-        }
-        
-        /* Lightbox */
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .lightbox-content {
-            max-width: 90%;
-            max-height: 90%;
-        }
-        
-        .lightbox-content img {
-            max-width: 100%;
-            max-height: 100%;
-            border-radius: 8px;
-            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
-        }
-        
-        .lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            background: rgba(0, 0, 0, 0.5);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .lightbox-caption {
-            position: absolute;
-            bottom: 20px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            color: white;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.7);
-        }
-        
-        /* Styles pour les programmes */
-        .program-section {
-            background: var(--light);
-        }
-        
-        .program-tabs {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid #dee2e6;
-        }
-        
-        .program-tab {
-            padding: 0.8rem 1.5rem;
-            cursor: pointer;
-            font-weight: 500;
-            color: var(--secondary);
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s ease;
-        }
-        
-        .program-tab.active {
-            color: var(--primary);
-            border-bottom: 3px solid var(--primary);
-        }
-        
-        .program-content {
-            display: none;
-        }
-        
-        .program-content.active {
-            display: block;
-        }
-        
-        .schedule-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 2rem;
-            background: var(--white);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-        }
-        
-        .schedule-table th,
-        .schedule-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #dee2e6;
-        }
-        
-        .schedule-table th {
-            background-color: var(--blue-dark);
-            color: var(--white);
-            font-weight: 500;
-        }
-        
-        .schedule-table tr:last-child td {
-            border-bottom: none;
-        }
-        
-        .schedule-table tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-        
-        .schedule-table tr:hover {
-            background-color: #e9ecef;
-        }
-        
-        .mass-schedule {
-            margin-bottom: 2rem;
-        }
-        
-        .mass-day {
-            background: var(--white);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-        }
-        
-        .mass-day h3 {
-            color: var(--blue-dark);
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--gold);
-        }
-        
-        .servant-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-        
-        .servant-item {
-            background: #f8f9fa;
-            padding: 0.8rem;
-            border-radius: 6px;
-            text-align: center;
-        }
-        
-        /* Media Queries */
-        @media (min-width: 769px) {
-            .header-container {
-                flex-wrap: nowrap;
-                padding: 0 2rem;
-            }
-            
-            nav {
-                width: auto;
-                order: initial;
-                margin-top: 0;
-            }
-            
-            .menu-toggle {
-                display: none;
-            }
-            
-            .logo {
-                width: 80px;
-                height: 80px;
-            }
-            
-            .logo-text h1 {
-                font-size: 1.8rem;
-            }
-            
-            .logo-text p {
-                font-size: 0.9rem;
-            }
-            
-            nav ul li a {
-                font-size: 1rem;
-            }
-            
-            .slider {
-                height: 400px;
-                max-height: none;
-            }
-            
-            .slide-content {
-                padding: 1.5rem;
-            }
-            
-            .slide-content h2 {
-                font-size: 1.8rem;
-            }
-            
-            .section {
-                padding: 3rem 2rem;
-            }
-            
-            .about-content {
-                flex-direction: row;
-            }
-            
-            .media-gallery {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            
-            .form-row {
-                flex-direction: row;
-                gap: 1.5rem;
-            }
-            
-            .footer-container {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            
-            .servant-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-    </style>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MJSA - Mouvement des Jeunes au Service de l'Autel</title>
+
+<style>
+
+/* CSS Reset et styles de base */
+
+* {
+
+margin: 0;
+
+padding: 0;
+
+box-sizing: border-box;
+
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+body {
+
+background-color: #f8f9fa;
+
+color: #343a40;
+
+line-height: 1.6;
+
+overflow-x: hidden;
+
+}
+
+a {
+
+text-decoration: none;
+
+color: inherit;
+
+}
+
+/* Couleurs principales */
+
+:root {
+
+--primary: #2c7be5;
+
+--secondary: #6c757d;
+
+--success: #00d97e;
+
+--info: #39afd1;
+
+--warning: #f6c343;
+
+--danger: #e63757;
+
+--light: #f8f9fa;
+
+--dark: #343a40;
+
+--white: #ffffff;
+
+--blue-dark: #1a2a6c;
+
+--gold: #d4af37;
+
+}
+
+/* Header */
+
+header {
+
+background: linear-gradient(135deg, var(--blue-dark), var(--primary));
+
+color: var(--white);
+
+padding: 1rem 0;
+
+position: relative;
+
+box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.header-container {
+
+display: flex;
+
+justify-content: space-between;
+
+align-items: center;
+
+max-width: 1200px;
+
+margin: 0 auto;
+
+padding: 0 1rem;
+
+flex-wrap: wrap;
+
+}
+
+.logo-container {
+
+display: flex;
+
+align-items: center;
+
+flex: 1;
+
+min-width: 0;
+
+}
+
+.logo {
+
+width: 60px;
+
+height: 60px;
+
+margin-right: 0.8rem;
+
+background-color: var(--gold);
+
+border-radius: 50%;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+font-weight: bold;
+
+color: var(--blue-dark);
+
+}
+
+.logo-text h1 {
+
+font-size: 1.5rem;
+
+margin-bottom: 0.3rem;
+
+color: var(--white);
+
+}
+
+.logo-text p {
+
+font-size: 0.8rem;
+
+opacity: 0.9;
+
+color: rgba(255, 255, 255, 0.8);
+
+line-height: 1.3;
+
+}
+
+/* Navigation */
+
+nav {
+
+width: 100%;
+
+order: 3;
+
+margin-top: 1rem;
+
+}
+
+nav ul {
+
+display: flex;
+
+list-style: none;
+
+flex-wrap: wrap;
+
+justify-content: center;
+
+}
+
+nav ul li {
+
+margin: 0.3rem 0.5rem;
+
+}
+
+nav ul li a {
+
+font-weight: 500;
+
+transition: all 0.3s ease;
+
+padding: 0.3rem 0;
+
+position: relative;
+
+color: var(--white);
+
+font-size: 0.9rem;
+
+}
+
+nav ul li a:hover {
+
+color: var(--gold);
+
+}
+
+nav ul li a::after {
+
+content: '';
+
+position: absolute;
+
+bottom: 0;
+
+left: 0;
+
+width: 0;
+
+height: 2px;
+
+background-color: var(--gold);
+
+transition: width 0.3s ease;
+
+}
+
+nav ul li a:hover::after {
+
+width: 100%;
+
+}
+
+/* Menu hamburger pour mobile */
+
+.menu-toggle {
+
+display: none;
+
+flex-direction: column;
+
+justify-content: space-around;
+
+width: 30px;
+
+height: 25px;
+
+background: transparent;
+
+border: none;
+
+cursor: pointer;
+
+padding: 0;
+
+}
+
+.menu-toggle span {
+
+width: 100%;
+
+height: 3px;
+
+background-color: var(--white);
+
+border-radius: 5px;
+
+transition: all 0.3s linear;
+
+}
+
+/* Slider */
+
+.slider-container {
+
+max-width: 1200px;
+
+margin: 1rem auto;
+
+position: relative;
+
+overflow: hidden;
+
+border-radius: 8px;
+
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+}
+
+.slider {
+
+display: flex;
+
+transition: transform 0.5s ease;
+
+height: 50vh;
+
+max-height: 300px;
+
+}
+
+.slide {
+
+min-width: 100%;
+
+position: relative;
+
+}
+
+.slide img {
+
+width: 100%;
+
+height: 100%;
+
+object-fit: cover;
+
+}
+
+.slide-content {
+
+position: absolute;
+
+bottom: 0;
+
+left: 0;
+
+right: 0;
+
+background: rgba(0, 0, 0, 0.6);
+
+color: white;
+
+padding: 1rem;
+
+}
+
+.slide-content h2 {
+
+margin-bottom: 0.3rem;
+
+font-size: 1.2rem;
+
+}
+
+.slide-content p {
+
+font-size: 0.9rem;
+
+}
+
+.slider-nav {
+
+position: absolute;
+
+top: 50%;
+
+width: 100%;
+
+display: flex;
+
+justify-content: space-between;
+
+transform: translateY(-50%);
+
+padding: 0 0.5rem;
+
+}
+
+.slider-nav button {
+
+background: rgba(255, 255, 255, 0.7);
+
+border: none;
+
+width: 35px;
+
+height: 35px;
+
+border-radius: 50%;
+
+font-size: 1rem;
+
+cursor: pointer;
+
+transition: all 0.3s ease;
+
+color: var(--blue-dark);
+
+}
+
+.slider-nav button:hover {
+
+background: white;
+
+}
+
+.slider-dots {
+
+position: absolute;
+
+bottom: 0.5rem;
+
+left: 50%;
+
+transform: translateX(-50%);
+
+display: flex;
+
+}
+
+.dot {
+
+width: 10px;
+
+height: 10px;
+
+border-radius: 50%;
+
+background: rgba(255, 255, 255, 0.5);
+
+margin: 0 4px;
+
+cursor: pointer;
+
+transition: all 0.3s ease;
+
+}
+
+.dot.active {
+
+background: white;
+
+}
+
+/* Sections */
+
+.section {
+
+padding: 2rem 1rem;
+
+max-width: 1200px;
+
+margin: 0 auto;
+
+}
+
+.section-title {
+
+text-align: center;
+
+margin-bottom: 1.5rem;
+
+position: relative;
+
+}
+
+.section-title h2 {
+
+font-size: 1.8rem;
+
+color: var(--blue-dark);
+
+display: inline-block;
+
+}
+
+.section-title h2::after {
+
+content: '';
+
+position: absolute;
+
+bottom: -8px;
+
+left: 50%;
+
+transform: translateX(-50%);
+
+width: 60px;
+
+height: 3px;
+
+background: var(--gold);
+
+}
+
+/* A propos */
+
+.about-content {
+
+display: flex;
+
+flex-direction: column;
+
+align-items: center;
+
+gap: 1.5rem;
+
+}
+
+.about-text {
+
+width: 100%;
+
+}
+
+.about-image {
+
+width: 100%;
+
+border-radius: 8px;
+
+overflow: hidden;
+
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+}
+
+.about-image img {
+
+width: 100%;
+
+height: auto;
+
+display: block;
+
+}
+
+/* Mot du Responsable */
+
+.message-section {
+
+background: linear-gradient(135deg, var(--blue-dark), #3a56a8);
+
+color: white;
+
+padding: 2rem 1rem;
+
+position: relative;
+
+overflow: hidden;
+
+}
+
+.message-container {
+
+max-width: 800px;
+
+margin: 0 auto;
+
+position: relative;
+
+z-index: 2;
+
+text-align: center;
+
+}
+
+.message-container h2 {
+
+font-size: 1.8rem;
+
+margin-bottom: 1rem;
+
+color: var(--gold);
+
+}
+
+.message-content {
+
+background: rgba(255, 255, 255, 0.1);
+
+backdrop-filter: blur(10px);
+
+border-radius: 8px;
+
+padding: 1.5rem;
+
+margin-bottom: 1.5rem;
+
+position: relative;
+
+}
+
+.message-content::before {
+
+content: '"';
+
+font-size: 5rem;
+
+position: absolute;
+
+top: -2rem;
+
+left: -0.5rem;
+
+color: rgba(255, 255, 255, 0.1);
+
+font-family: serif;
+
+line-height: 1;
+
+}
+
+.message-content p {
+
+font-size: 1rem;
+
+line-height: 1.6;
+
+margin-bottom: 1rem;
+
+}
+
+.signature {
+
+font-family: 'Brush Script MT', cursive;
+
+font-size: 1.5rem;
+
+color: var(--gold);
+
+margin-top: 0.5rem;
+
+}
+
+.responsable-title {
+
+font-style: italic;
+
+opacity: 0.9;
+
+font-size: 0.9rem;
+
+}
+
+.message-bg {
+
+position: absolute;
+
+top: 0;
+
+left: 0;
+
+width: 100%;
+
+height: 100%;
+
+object-fit: cover;
+
+opacity: 0.2;
+
+z-index: 1;
+
+}
+
+/* Bibliothèque Média */
+
+.media-library {
+
+background: var(--light);
+
+}
+
+.media-gallery {
+
+display: grid;
+
+grid-template-columns: 1fr;
+
+gap: 1rem;
+
+margin-top: 1.5rem;
+
+}
+
+.media-item {
+
+position: relative;
+
+border-radius: 8px;
+
+overflow: hidden;
+
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+transition: all 0.3s ease;
+
+background: var(--white);
+
+cursor: pointer;
+
+}
+
+.media-item:hover {
+
+transform: translateY(-3px);
+
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+
+}
+
+.media-thumbnail {
+
+height: 200px;
+
+overflow: hidden;
+
+}
+
+.media-thumbnail img {
+
+width: 100%;
+
+height: 100%;
+
+object-fit: cover;
+
+transition: transform 0.5s ease;
+
+}
+
+.media-item:hover .media-thumbnail img {
+
+transform: scale(1.05);
+
+}
+
+.media-info {
+
+padding: 1rem;
+
+}
+
+.media-info h3 {
+
+margin-bottom: 0.5rem;
+
+color: var(--blue-dark);
+
+font-size: 1.1rem;
+
+}
+
+.media-meta {
+
+display: flex;
+
+justify-content: space-between;
+
+color: var(--secondary);
+
+font-size: 0.8rem;
+
+margin-bottom: 0.8rem;
+
+}
+
+.media-type {
+
+display: inline-block;
+
+padding: 0.2rem 0.6rem;
+
+border-radius: 20px;
+
+font-size: 0.75rem;
+
+font-weight: bold;
+
+}
+
+.media-type.photo {
+
+background: #e3f2fd;
+
+color: #1976d2;
+
+}
+
+.media-type.video {
+
+background: #ffebee;
+
+color: #d32f2f;
+
+}
+
+.view-btn {
+
+display: inline-block;
+
+background: var(--primary);
+
+color: white;
+
+padding: 0.4rem 0.8rem;
+
+border-radius: 4px;
+
+font-size: 0.85rem;
+
+transition: all 0.3s ease;
+
+}
+
+.view-btn:hover {
+
+background: var(--blue-dark);
+
+}
+
+/* Formulaire d'inscription */
+
+.form-section {
+
+background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+
+}
+
+.form-container {
+
+background: var(--white);
+
+border-radius: 8px;
+
+padding: 1.5rem;
+
+box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+
+max-width: 800px;
+
+margin: 0 auto;
+
+border: 1px solid rgba(0, 0, 0, 0.05);
+
+}
+
+.form-header {
+
+text-align: center;
+
+margin-bottom: 1.5rem;
+
+}
+
+.form-header h2 {
+
+color: var(--blue-dark);
+
+margin-bottom: 0.5rem;
+
+font-size: 1.5rem;
+
+}
+
+.form-header p {
+
+color: var(--secondary);
+
+font-size: 0.9rem;
+
+}
+
+.form-group {
+
+margin-bottom: 1rem;
+
+}
+
+.form-group label {
+
+display: block;
+
+margin-bottom: 0.3rem;
+
+font-weight: 500;
+
+color: var(--dark);
+
+font-size: 0.9rem;
+
+}
+
+.form-group input,
+
+.form-group select,
+
+.form-group textarea {
+
+width: 100%;
+
+padding: 0.7rem 0.8rem;
+
+border: 1px solid #ced4da;
+
+border-radius: 6px;
+
+font-size: 0.9rem;
+
+transition: all 0.3s ease;
+
+background-color: var(--white);
+
+}
+
+.form-group input:focus,
+
+.form-group select:focus,
+
+.form-group textarea:focus {
+
+border-color: var(--primary);
+
+outline: none;
+
+box-shadow: 0 0 0 3px rgba(44, 123, 229, 0.1);
+
+}
+
+.form-row {
+
+display: flex;
+
+flex-direction: column;
+
+gap: 0;
+
+}
+
+.form-row .form-group {
+
+width: 100%;
+
+}
+
+.submit-btn {
+
+display: block;
+
+width: 100%;
+
+background: linear-gradient(to right, var(--primary), var(--blue-dark));
+
+color: white;
+
+border: none;
+
+padding: 0.8rem;
+
+font-size: 1rem;
+
+font-weight: 500;
+
+border-radius: 6px;
+
+cursor: pointer;
+
+transition: all 0.3s ease;
+
+margin-top: 1rem;
+
+}
+
+.submit-btn:hover {
+
+transform: translateY(-2px);
+
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+}
+
+/* Section Inspirante */
+
+.inspiration-section {
+
+background: url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+
+padding: 3rem 1rem;
+
+text-align: center;
+
+color: white;
+
+position: relative;
+
+}
+
+.inspiration-section::before {
+
+content: '';
+
+position: absolute;
+
+top: 0;
+
+left: 0;
+
+width: 100%;
+
+height: 100%;
+
+background: rgba(26, 42, 108, 0.85);
+
+}
+
+.inspiration-content {
+
+max-width: 800px;
+
+margin: 0 auto;
+
+position: relative;
+
+z-index: 2;
+
+}
+
+.inspiration-content h2 {
+
+font-size: 1.8rem;
+
+margin-bottom: 1rem;
+
+color: var(--gold);
+
+}
+
+.inspiration-content p {
+
+font-size: 1rem;
+
+margin-bottom: 1.5rem;
+
+line-height: 1.6;
+
+}
+
+.verse {
+
+font-style: italic;
+
+font-size: 1.1rem;
+
+margin: 1.5rem 0;
+
+position: relative;
+
+padding: 0 1.5rem;
+
+color: rgba(255, 255, 255, 0.9);
+
+}
+
+.verse::before,
+
+.verse::after {
+
+content: '"';
+
+font-size: 2rem;
+
+position: absolute;
+
+color: rgba(212, 175, 55, 0.3);
+
+}
+
+.verse::before {
+
+top: -0.8rem;
+
+left: 0;
+
+}
+
+.verse::after {
+
+bottom: -1.5rem;
+
+right: 0;
+
+}
+
+.cta-button {
+
+display: inline-block;
+
+background: linear-gradient(to right, var(--gold), #b8860b);
+
+color: var(--dark);
+
+padding: 0.8rem 1.5rem;
+
+border-radius: 50px;
+
+font-size: 0.9rem;
+
+font-weight: bold;
+
+text-transform: uppercase;
+
+letter-spacing: 0.5px;
+
+margin-top: 0.5rem;
+
+transition: all 0.3s ease;
+
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+
+}
+
+.cta-button:hover {
+
+transform: translateY(-3px);
+
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+
+color: var(--white);
+
+}
+
+/* Footer */
+
+footer {
+
+background: var(--blue-dark);
+
+color: var(--white);
+
+padding: 2rem 0 1rem;
+
+}
+
+.footer-container {
+
+max-width: 1200px;
+
+margin: 0 auto;
+
+padding: 0 1rem;
+
+display: grid;
+
+grid-template-columns: 1fr;
+
+gap: 1.5rem;
+
+}
+
+.footer-col h3 {
+
+font-size: 1.1rem;
+
+margin-bottom: 1rem;
+
+position: relative;
+
+padding-bottom: 0.5rem;
+
+color: var(--white);
+
+}
+
+.footer-col h3::after {
+
+content: '';
+
+position: absolute;
+
+bottom: 0;
+
+left: 0;
+
+width: 40px;
+
+height: 2px;
+
+background: var(--gold);
+
+}
+
+.footer-col p {
+
+margin-bottom: 0.8rem;
+
+opacity: 0.8;
+
+color: rgba(255, 255, 255, 0.8);
+
+font-size: 0.9rem;
+
+}
+
+.footer-links {
+
+list-style: none;
+
+}
+
+.footer-links li {
+
+margin-bottom: 0.5rem;
+
+}
+
+.footer-links a {
+
+opacity: 0.8;
+
+transition: opacity 0.3s ease;
+
+color: rgba(255, 255, 255, 0.8);
+
+font-size: 0.9rem;
+
+}
+
+.footer-links a:hover {
+
+opacity: 1;
+
+color: var(--gold);
+
+}
+
+.social-links {
+
+display: flex;
+
+gap: 0.8rem;
+
+margin-top: 0.8rem;
+
+}
+
+.social-links a {
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+width: 35px;
+
+height: 35px;
+
+background: rgba(255, 255, 255, 0.1);
+
+border-radius: 50%;
+
+transition: all 0.3s ease;
+
+color: var(--white);
+
+font-size: 1rem;
+
+}
+
+.social-links a:hover {
+
+background: var(--gold);
+
+transform: translateY(-3px);
+
+color: var(--dark);
+
+}
+
+.copyright {
+
+text-align: center;
+
+padding-top: 1.5rem;
+
+margin-top: 1.5rem;
+
+border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+opacity: 0.7;
+
+font-size: 0.8rem;
+
+color: rgba(255, 255, 255, 0.7);
+
+}
+
+/* Styles pour l'authentification */
+
+.auth-section {
+
+min-height: 100vh;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+background: linear-gradient(rgba(26, 42, 108, 0.8), rgba(26, 42, 108, 0.9));
+
+padding: 2rem;
+
+}
+
+.auth-container {
+
+background: var(--white);
+
+border-radius: 10px;
+
+padding: 2rem;
+
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+width: 100%;
+
+max-width: 500px;
+
+}
+
+.auth-header {
+
+text-align: center;
+
+margin-bottom: 1.5rem;
+
+}
+
+.auth-header h2 {
+
+color: var(--blue-dark);
+
+margin-bottom: 0.5rem;
+
+font-size: 1.5rem;
+
+}
+
+.auth-header p {
+
+color: var(--secondary);
+
+}
+
+.form-switch {
+
+text-align: center;
+
+margin-top: 1.5rem;
+
+color: var(--secondary);
+
+}
+
+.form-switch a {
+
+color: var(--primary);
+
+font-weight: 500;
+
+cursor: pointer;
+
+}
+
+/* Message de bienvenue */
+
+.welcome-banner {
+
+background: linear-gradient(135deg, var(--blue-dark), #3a56a8);
+
+color: white;
+
+padding: 1.5rem;
+
+text-align: center;
+
+margin-bottom: 2rem;
+
+border-radius: 0 0 10px 10px;
+
+}
+
+.welcome-banner h2 {
+
+margin-bottom: 0.5rem;
+
+color: var(--gold);
+
+}
+
+/* Site Content */
+
+.site-content {
+
+display: none;
+
+}
+
+/* Lightbox */
+
+.lightbox {
+
+display: none;
+
+position: fixed;
+
+top: 0;
+
+left: 0;
+
+width: 100%;
+
+height: 100%;
+
+background-color: rgba(0, 0, 0, 0.9);
+
+z-index: 1000;
+
+justify-content: center;
+
+align-items: center;
+
+}
+
+.lightbox-content {
+
+max-width: 90%;
+
+max-height: 90%;
+
+}
+
+.lightbox-content img {
+
+max-width: 100%;
+
+max-height: 100%;
+
+border-radius: 8px;
+
+box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+
+}
+
+.lightbox-close {
+
+position: absolute;
+
+top: 20px;
+
+right: 20px;
+
+color: white;
+
+font-size: 2rem;
+
+cursor: pointer;
+
+background: rgba(0, 0, 0, 0.5);
+
+width: 40px;
+
+height: 40px;
+
+border-radius: 50%;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+}
+
+.lightbox-caption {
+
+position: absolute;
+
+bottom: 20px;
+
+left: 0;
+
+right: 0;
+
+text-align: center;
+
+color: white;
+
+padding: 10px;
+
+background: rgba(0, 0, 0, 0.7);
+
+}
+
+/* Styles pour les programmes */
+
+.program-section {
+
+background: var(--light);
+
+}
+
+.program-tabs {
+
+display: flex;
+
+justify-content: center;
+
+margin-bottom: 2rem;
+
+border-bottom: 1px solid #dee2e6;
+
+}
+
+.program-tab {
+
+padding: 0.8rem 1.5rem;
+
+cursor: pointer;
+
+font-weight: 500;
+
+color: var(--secondary);
+
+border-bottom: 3px solid transparent;
+
+transition: all 0.3s ease;
+
+}
+
+.program-tab.active {
+
+color: var(--primary);
+
+border-bottom: 3px solid var(--primary);
+
+}
+
+.program-content {
+
+display: none;
+
+}
+
+.program-content.active {
+
+display: block;
+
+}
+
+.schedule-table {
+
+width: 100%;
+
+border-collapse: collapse;
+
+margin-bottom: 2rem;
+
+background: var(--white);
+
+border-radius: 8px;
+
+overflow: hidden;
+
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+
+}
+
+.schedule-table th,
+
+.schedule-table td {
+
+padding: 1rem;
+
+text-align: left;
+
+border-bottom: 1px solid #dee2e6;
+
+}
+
+.schedule-table th {
+
+background-color: var(--blue-dark);
+
+color: var(--white);
+
+font-weight: 500;
+
+}
+
+.schedule-table tr:last-child td {
+
+border-bottom: none;
+
+}
+
+.schedule-table tr:nth-child(even) {
+
+background-color: #f8f9fa;
+
+}
+
+.schedule-table tr:hover {
+
+background-color: #e9ecef;
+
+}
+
+.mass-schedule {
+
+margin-bottom: 2rem;
+
+}
+
+.mass-day {
+
+background: var(--white);
+
+border-radius: 8px;
+
+padding: 1.5rem;
+
+margin-bottom: 1.5rem;
+
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+
+}
+
+.mass-day h3 {
+
+color: var(--blue-dark);
+
+margin-bottom: 1rem;
+
+padding-bottom: 0.5rem;
+
+border-bottom: 2px solid var(--gold);
+
+}
+
+.servant-grid {
+
+display: grid;
+
+grid-template-columns: repeat(2, 1fr);
+
+gap: 1rem;
+
+}
+
+.servant-item {
+
+background: #f8f9fa;
+
+padding: 0.8rem;
+
+border-radius: 6px;
+
+text-align: center;
+
+}
+
+/* Media Queries */
+
+@media (min-width: 769px) {
+
+.header-container {
+
+flex-wrap: nowrap;
+
+padding: 0 2rem;
+
+}
+
+nav {
+
+width: auto;
+
+order: initial;
+
+margin-top: 0;
+
+}
+
+.menu-toggle {
+
+display: none;
+
+}
+
+.logo {
+
+width: 80px;
+
+height: 80px;
+
+}
+
+.logo-text h1 {
+
+font-size: 1.8rem;
+
+}
+
+.logo-text p {
+
+font-size: 0.9rem;
+
+}
+
+nav ul li a {
+
+font-size: 1rem;
+
+}
+
+.slider {
+
+height: 400px;
+
+max-height: none;
+
+}
+
+.slide-content {
+
+padding: 1.5rem;
+
+}
+
+.slide-content h2 {
+
+font-size: 1.8rem;
+
+}
+
+.section {
+
+padding: 3rem 2rem;
+
+}
+
+.about-content {
+
+flex-direction: row;
+
+}
+
+.media-gallery {
+
+grid-template-columns: repeat(3, 1fr);
+
+}
+
+.form-row {
+
+flex-direction: row;
+
+gap: 1.5rem;
+
+}
+
+.footer-container {
+
+grid-template-columns: repeat(3, 1fr);
+
+}
+
+.servant-grid {
+
+grid-template-columns: repeat(4, 1fr);
+
+}
+
+}
+
+</style>
+
 </head>
+
 <body>
-    <!-- Section d'authentification (visible par défaut) -->
-    <section class="auth-section" id="auth-section">
-        <div class="auth-container" id="login-form">
-            <div class="auth-header">
-                <h2>Connexion au MJSA</h2>
-                <p>Connectez-vous à votre compte</p>
-            </div>
-            
-            <form id="login-form-element">
-                <div class="form-group">
-                    <label for="login-email">Email</label>
-                    <input type="email" id="login-email" required placeholder="Votre email">
-                </div>
-                
-                <div class="form-group">
-                    <label for="login-password">Mot de passe</label>
-                    <input type="password" id="login-password" required placeholder="Votre mot de passe">
-                </div>
-                
-                <button type="submit" class="submit-btn">Se connecter</button>
-                
-                <div class="form-switch">
-                    Pas encore inscrit? <a id="show-register">Créer un compte</a>
-                </div>
-            </form>
-        </div>
-        
-        <div class="auth-container" id="register-form" style="display: none;">
-            <div class="auth-header">
-                <h2>Inscription au MJSA</h2>
-                <p>Rejoignez notre mouvement</p>
-            </div>
-            
-            <form id="register-form-element">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="nom">Nom</label>
-                        <input type="text" id="nom" required placeholder="Votre nom">
-                    </div>
-                    <div class="form-group">
-                        <label for="prenom">Prénom</label>
-                        <input type="text" id="prenom" required placeholder="Votre prénom">
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required placeholder="Votre email">
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="password">Mot de passe</label>
-                        <input type="password" id="password" required placeholder="Choisissez un mot de passe">
-                    </div>
-                    <div class="form-group">
-                        <label for="confirm-password">Confirmer le mot de passe</label>
-                        <input type="password" id="confirm-password" required placeholder="Confirmez votre mot de passe">
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="date-naissance">Date de naissance</label>
-                    <input type="date" id="date-naissance" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="motivation">Pourquoi souhaitez-vous rejoindre le MJSA?</label>
-                    <textarea id="motivation" rows="3" placeholder="Décrivez vos motivations..."></textarea>
-                </div>
-                
-                <button type="submit" class="submit-btn">S'inscrire</button>
-                
-                <div class="form-switch">
-                    Déjà inscrit? <a id="show-login">Se connecter</a>
-                </div>
-            </form>
-        </div>
-    </section>
-    <!-- Section des inscrits -->
-<section class="contact-form" id="liste-inscrits">
-    <div class="form-container">
-        <div class="section-title">
-            <h2>Liste des personnes inscrites</h2>
-            <p>Voici toutes les personnes inscrites via le formulaire</p>
-        </div>
-        <table id="table-inscrits" border="1" style="width:100%; border-collapse:collapse; text-align:left;">
-            <thead>
-                <tr>
-                    <th>Nom parent</th>
-                    <th>Prénom parent</th>
-                    <th>Email</th>
-                    <th>Téléphone</th>
-                    <th>Ville</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Les inscrits apparaîtront ici -->
-            </tbody>
-        </table>
-    </div>
+
+<!-- Section d'authentification (visible par défaut) -->
+
+<section class="auth-section" id="auth-section">
+
+<div class="auth-container" id="login-form">
+
+<div class="auth-header">
+
+<h2>Connexion au MJSA</h2>
+
+<p>Connectez-vous à votre compte</p>
+
+</div>
+
+<form id="login-form-element">
+
+<div class="form-group">
+
+<label for="login-email">Email</label>
+
+<input type="email" id="login-email" required placeholder="Votre email">
+
+</div>
+
+<div class="form-group">
+
+<label for="login-password">Mot de passe</label>
+
+<input type="password" id="login-password" required placeholder="Votre mot de passe">
+
+</div>
+
+<button type="submit" class="submit-btn">Se connecter</button>
+
+<div class="form-switch">
+
+Pas encore inscrit? <a id="show-register">Créer un compte</a>
+
+</div>
+
+</form>
+
+</div>
+
+<div class="auth-container" id="register-form" style="display: none;">
+
+<div class="auth-header">
+
+<h2>Inscription au MJSA</h2>
+
+<p>Rejoignez notre mouvement</p>
+
+</div>
+
+<form id="register-form-element">
+
+<div class="form-row">
+
+<div class="form-group">
+
+<label for="nom">Nom</label>
+
+<input type="text" id="nom" required placeholder="Votre nom">
+
+</div>
+
+<div class="form-group">
+
+<label for="prenom">Prénom</label>
+
+<input type="text" id="prenom" required placeholder="Votre prénom">
+
+</div>
+
+</div>
+
+<div class="form-group">
+
+<label for="email">Email</label>
+
+<input type="email" id="email" required placeholder="Votre email">
+
+</div>
+
+<div class="form-row">
+
+<div class="form-group">
+
+<label for="password">Mot de passe</label>
+
+<input type="password" id="password" required placeholder="Choisissez un mot de passe">
+
+</div>
+
+<div class="form-group">
+
+<label for="confirm-password">Confirmer le mot de passe</label>
+
+<input type="password" id="confirm-password" required placeholder="Confirmez votre mot de passe">
+
+</div>
+
+</div>
+
+<div class="form-group">
+
+<label for="date-naissance">Date de naissance</label>
+
+<input type="date" id="date-naissance" required>
+
+</div>
+
+<div class="form-group">
+
+<label for="motivation">Pourquoi souhaitez-vous rejoindre le MJSA?</label>
+
+<textarea id="motivation" rows="3" placeholder="Décrivez vos motivations..."></textarea>
+
+</div>
+
+<button type="submit" class="submit-btn">S'inscrire</button>
+
+<div class="form-switch">
+
+Déjà inscrit? <a id="show-login">Se connecter</a>
+
+</div>
+
+</form>
+
+</div>
+
 </section>
 
-    <!-- Lightbox pour afficher les images -->
-    <div class="lightbox" id="lightbox">
-        <div class="lightbox-close" id="lightbox-close">×</div>
-        <div class="lightbox-content" id="lightbox-content"></div>
-        <div class="lightbox-caption" id="lightbox-caption"></div>
-    </div>
-    
-    <!-- Contenu du site (masqué initialement) -->
-    <div class="site-content" id="site-content">
-        <!-- Header -->
-        <header>
-            <div class="header-container">
-                <div class="logo-container">
-                   <img src="logo.jpeg" alt="Logo MJSA" class="logo">
-                    <div class="logo-text">
-                        <h1>MJSA</h1>
-                        <p>Mouvement des Jeunes au Service de l'Autel<br>Paroisse Sainte Anne de Port-Bouët</p>
-                    </div>
-                </div>
-                
-                <button class="menu-toggle" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                
-                <nav id="main-nav">
-                    <ul>
-                        <li><a href="#accueil">Accueil</a></li>
-                        <li><a href="#apropos">À propos</a></li>
-                        <li><a href="#message">Mot du Responsable</a></li>
-                        <li><a href="#bibliotheque">Bibliothèque</a></li>
-                        <li><a href="#programmes">Programmes</a></li>
-                        <li><a href="#inspiration">Inspiration</a></li>
-                        <li><a href="#" id="logout-link">Déconnexion</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
+<!-- Lightbox pour afficher les images -->
 
-        <!-- Message de bienvenue -->
-        <div class="welcome-banner">
-            <div class="container">
-                <h2>Bienvenue, <span id="user-name">Cher Membre</span> !</h2>
-                <p>Votre inscription a été réussie. Nous sommes ravis de vous compter parmi nous.</p>
-            </div>
-        </div>
+<div class="lightbox" id="lightbox">
 
-        <!-- Slider -->
-        <section id="accueil" class="slider-container">
-            <div class="slider">
-                <div class="slide">
-                    <img src="akichi.jpeg" alt="FONDATEUR DU MJSA">
-                    <div class="slide-content">
-                        <h2>feu Monseigneur joseph aka AKICHI</h2>
-                        <p>Rejoignez notre mouvement pour servir avec joie, respect, amour et fidelité</p>
-                    </div>
-                </div>
-                <div class="slide">
-                    <img src="jean luc .jpeg" alt="Retraite spirituelle">
-                    <div class="slide-content">
-                        <h2>Feu Père franciscain jean luc picault </h2>
-                        <p>Fondateur du MJSA</p>
-                    </div>
-                </div>
-                <div class="slide">
-                    <img src="tarcisus.jpeg" alt="Formation des servants">
-                    <div class="slide-content">
-                        <h2>Notre saint patron </h2>
-                        <p>Améliorez vos compétences pour mieux servir</p>
-                    </div>
-                </div>
-            </div>
-            <div class="slider-nav">
-                <button class="prev-btn">&#10094;</button>
-                <button class="next-btn">&#10095;</button>
-            </div>
-            <div class="slider-dots">
-                <div class="dot active"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-            </div>
-        </section>
+<div class="lightbox-close" id="lightbox-close">×</div>
 
-        <!-- À propos -->
-        <section id="apropos" class="section">
-            <div class="section-title">
-                <h2>À propos du MJSA</h2>
-            </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>Le Mouvement des Jeunes au Service de l'Autel (MJSA) de la Paroisse Sainte Anne de Port-Bouët est une organisation catholique qui rassemble des jeunes désireux de servir Dieu et l'Église à travers le service liturgique. fondé en 1988,le MJSA a pour mission de former des servants d'autel compétents, pieux et engagés dans leur foi.</p>
-                    <p>Notre mouvement offre une formation spirituelle, liturgique et humaine aux jeunes qui souhaitent participer activement à la célébration eucharistique. Nous tenons nos répétitions les mercredis de 15h à 17h et les formations les dimanches de 15h à a 17h</p>
-                </div>
-                <div class="about-image">
-                    <img src="gbpnhi.jpeg" alt="Groupe MJSA">
-                </div>
-            </div>
-        </section>
+<div class="lightbox-content" id="lightbox-content"></div>
 
-        <!-- Mot du Responsable -->
-        <section id="message" class="message-section">
-            <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Background" class="message-bg">
-            <div class="message-container">
-                <h2>Mot du Responsable</h2>
-                <div class="message-content">
-                    <p>Chers jeunes servants, chers parents, chers membres de notre communauté paroissiale,</p>
-                    
-                    <p>En cette année dédiée à la jeunesse et au service liturgique, je tiens à vous exprimer toute ma gratitude pour votre engagement au sein du Mouvement des Jeunes au Service de l'Autel de la Paroisse Sainte Anne de Port-Bouët.</p>
-                    
-                    <p>Servir à l'autel n'est pas simplement une activité parmi d'autres, c'est une vocation sacrée qui vous rapproche chaque jour un peu plus du mystère eucharistique. À travers votre service, vous devenez des témoins vivants de la faith pour toute l'assemblée.</p>
-                    
-                    <div class="signature">R. BROU Axel-mary oswald</div>
-                    <div class="responsable-title">Responsable du MJSA - Sainte Anne de Port-Bouët</div>
-                </div>
-            </div>
-        </section>
+<div class="lightbox-caption" id="lightbox-caption"></div>
 
-        <!-- Bibliothèque Média COMPLÈTE -->
-        <section id="bibliotheque" class="section media-library">
-            <div class="section-title">
-                <h2>Bibliothèque Média</h2>
-            </div>
-            <p style="text-align: center; margin-bottom: 2rem; color: var(--secondary);">Découvrez nos photos et vidéos des activités du MJSA. Cliquez sur une image pour l'agrandir.</p>
-            
-            <div class="media-gallery">
-                <!-- Première ligne -->
-                <div class="media-item" data-image="soutanelle.jpeg" data-title="Photo avec le gbonhi des magnifique enfants de choeur">
-                    <div class="media-thumbnail">
-                        <img src="soutanelle.jpeg" alt="Gbonhi des magnifique enfants de choeur">
-                    </div>
-                    <div class="media-info">
-                        <h3>Photo avec le gbonhi des magnifique enfants de choeur</h3>
-                        <div class="media-meta">
-                            <span>13 juillet 2025</span>
-                            <span class="media-type photo">Photo</span>
-                        </div>
-                        <div class="view-btn">Voir</div>
-                    </div>
-                </div>
-                
-                <div class="media-item" data-image="theo.jpeg" data-title="Le petit diocesain">
-                    <div class="media-thumbnail">
-                        <img src="theo.jpeg" alt="Le petit diocesain">
-                    </div>
-                    <div class="media-info">
-                        <h3>Le petit Diocesain</h3>
-                        <div class="media-meta">
-                            <span>13 juillet 2025</span>
-                            <span class="media-type photo">Photo</span>
-                        </div>
-                        <div class="view-btn">Voir</div>
-                    </div>
-                </div>
-                
-                <div class="media-item" data-image="les promettants.jpeg" data-title="Les nouveaux promettants">
-                    <div class="media-thumbnail">
-                        <img src="les promettants.jpeg" alt="Nouveaux promettants">
-                    </div>
-                    <div class="media-info">
-                        <h3>Les nouveaux promettants</h3>
-                        <div class="media-meta">
-                            <span>13 juillet 2025</span>
-                            <span class="media-type photo">Photo</span>
-                        </div>
-                        <div class="view-btn">Voir</div>
-                    </div>
-                </div>
-                
-                <!-- Deuxième ligne -->
-                <div class="media-item" data-image="catholique.jpeg" data-title="Quelque autre servants">
-                    <div class="media-thumbnail">
-                        <img src="catholique.jpeg" alt="Autres servants">
-                    </div>
-                    <div class="media-info">
-                        <h3>Quelque autre servants</h3>
-                        <div class="media-meta">
-                            <span>18 Avril 2025</span>
-                            <span class="media-type photo">Photo</span>
-                        </div>
-                        <div class="view-btn">Voir</div>
-                    </div>
-                </div>
-                
-                <div class="media-item" data-image="dago.jpeg" data-title="Servant, missionnaire">
-                    <div class="media-thumbnail">
-                        <img src="dago.jpeg" alt="Servant missionnaire">
-                    </div>
-                    <div class="media-info">
-                        <h3>Servant, missionnaire</h3>
-                        <div class="media-meta">
-                            <span>13 mai 2025</span>
-                            <span class="media-type photo">Photo</span>
-                        </div>
-                        <div class="view-btn">Voir</div>
-                    </div>
-                </div>
-                
-                <div class="media-item" data-image="famille.jpeg" data-title="Une famille où il fait bon vivre">
-                    <div class="media-thumbnail">
-                        <img src="famille.jpeg" alt="Famille MJSA">
-                    </div>
-                    <div class="media-info">
-                        <h3>Une famille où il fait bon vivre</h3>
-                        <div class="media-meta">
-                            <span>13 Mai 2024</span>
-                            <span class="media-type photo">Photo</span>
-                        </div>
-                        <div class="view-btn">Voir</div>
-                    </div>
-                </div>
-                
-                <!-- Troisième ligne -->
-                <div class="media-item" data-image="yoyo.jpeg" data-title="Le premier responsable">
-                    <div class="media-thumbnail">
-                        <img src="yoyo.jpeg" alt="Premier responsable">
-                    </div>
-                    <div class="media-info">
-                        <h3>Le premier responsable</h3>
-                        <div class="media-meta">
-                            <span>13 Avril 2025</span>
-                            <span class="media-type photo">Photo</span>
-                        </div>
-                        <div class="view-btn">Voir</div>
-                    </div>
-                </div>
-                
-                <div class="media-item" data-image="tarcisus.jpeg" data-title="Notre saint patron">
-                    <div class="media-thumbnail">
-                        <img src="tarcisus.jpeg" alt="Saint patron">
-                    </div>
-                    <div class="media-info">
-                        <h3>Notre saint patron</h3>
-                        <div class="media-meta">
-                            <span>13 Avril 2025</span>
-                            <span class="media-type photo">Photo</span>
-                        </div>
-                        <div class="view-btn">Voir</div>
-                    </div>
-                </div>
-                
-                <div class="media-item" data-image="respo.jpeg" data-title="Quelque responsable">
-                    <div class="media-thumbnail">
-                        <img src="respo.jpeg" alt="Responsables MJSA">
-                    </div>
-                    <div class="media-info">
-                        <h3>Quelque responsable</h3>
-                        <div class="media-meta">
-                            <span>15 Mai 2025</span>
-                            <span class="media-type photo">Photo</span>
-                        </div>
-                        <div class="view-btn">Voir</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+</div>
 
-        <!-- Section Programmes -->
-        <section id="programmes" class="section program-section">
-            <div class="section-title">
-                <h2>Programmes d'Activités & Programmes des Messe</h2>
-            </div>
-            
-            <div class="program-tabs">
-                <div class="program-tab active" data-tab="activities">Activités</div>
-                <div class="program-tab" data-tab="masses">Messes</div>
-            </div>
-            
-            <div class="program-content active" id="activities-content">
-                <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--blue-dark);">Programme d'Activités 2025-2026</h3>
-                
-                <table class="schedule-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Activité</th>
-                            <th>Lieu</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>02 Novembre 2025</td>
-                            <td>Prière collective d'ouverture</td>
-                            <td>Paroisse sainte Anne de Port-Bouet</td>
-                        </tr>
-                        <tr>
-                            <td>29 Novembre 2025</td>
-                            <td>24h de prière</td>
-                            <td>Chapelle de l'hopital</td>
-                        </tr>
-                        <tr>
-                            <td>27 Decembre 2025</td>
-                            <td>MJSA CHAMPIONSHIP</td>
-                            <td>Terrain de l'ecole de la mission</td>
-                        </tr>
-                        <tr>
-                            <td>03 Janvier 2026</td>
-                            <td>Journée récréative</td>
-                            <td>Paroisse sainte Anne de Port-Bouet</td>
-                        </tr>
-                        <tr>
-                            <td>24 Janvier 2026</td>
-                            <td>MJSA CHAMPIONSHIP</td>
-                            <td>Terrain de l'ecole de la mission</td>
-                        </tr>
-                        <tr>
-                            <td>31 Janvier 2026</td>
-                            <td>24h de prière</td>
-                            <td>Chapelle de l'hopital</td>
-                        </tr>
-                        <tr>
-                            <td>19 Février 2026</td>
-                            <td>Visite guidée</td>
-                            <td>À déterminer</td>
-                        </tr>
-                        <tr>
-                            <td>28 Février 2026</td>
-                            <td>MJSA CHAMPIONSHIP</td>
-                            <td>Terrain de l'ecole de la mission</td>
-                        </tr>
-                        <tr>
-                            <td>01  Mars 2026</td>
-                            <td>Visite fraternelle</td>
-                            <td>Paroisse cœur immaculé de marie Imperial de Bassam </td>
-                        </tr>
-                        <tr>
-                            <td>05 Avril 2026</td>
-                            <td>Répétition générale Semaine Sainte</td>
-                            <td>Église Sainte Anne</td>
-                        </tr>
-                        <tr>
-                            <td>18-20 Avril 2026</td>
-                            <td>MJSA CHAMPIONSHIP</td>
-                            <td>Terrain de l'ecole de la mission</td>
-                        </tr>
-                        <tr>
-                            <td>28 Mai 2025</td>
-                           <td>24h de prière</td>
-                            <td>Chapelle de l'hopital</td>
-                        </tr>
-                        <tr>
-                            <td>04 Avril 2026</td>
-                            <td>MJSA CHAMPIONSHIP</td>
-                            <td>Terrain de l'ecole de la mission</td>
-                        </tr>
-                        <tr>
-                            <td>10 Avril 2026</td>
-                            <td>Journée fraternelle avec les CVAV</td>
-                            <td>Paroisse sainte Anne de Port-Bouet</td>
-                        </tr>
-                        <tr>
-                            <td> MAI 2026</td>
-                            <td>Promesse Diocésaine</td>
-                            <td>À determiner</td>
-                        </tr>
-                        <tr>
-                            <td>23 MAI 2026</td>
-                            <td>MJSA CHAMPIONSHIP</td>
-                            <td>Terrain de l'ecole de la mission</td>
-                        </tr>
-                        <tr>
-                            <td>30 MAI 2026</td>
-                            <td>24h de prière</td>
-                            <td>Chapelle de l'hopital</td>
-                        </tr>
-                        <tr>
-                            <td>07 Juin  2026</td>
-                            <td>Ceremonie de prise d 'Aubes et de prise de croix</td>
-                            <td>Paroisse sainte Anne</td>
-                        </tr>
-                          <tr>
-                            <td> Juillet 2026</td>
-                            <td>Secteur Bonoua ou Aboisso</td>
-                            <td>Camp de formation</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="program-content" id="masses-content">
-                <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--blue-dark);">Programme des Messes Hebdomadaires</h3>
-                
-                <div class="mass-schedule">
-                    <!-- Lundi -->
-                    <div class="mass-day">
-                        <h3>Lundi - Messe à 6h20</h3>
-                        <div class="servant-grid">
-                            <div class="servant-item">EZA Thomas</div>
-                            <div class="servant-item">KONE Malick</div>
-                            <div class="servant-item">Jacques Séri</div>
-                            <div class="servant-item">AKO Loic</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Mardi -->
-                    <div class="mass-day">
-                        <h3>Mardi - Messe à 6h20</h3>
-                        <div class="servant-grid">
-                          <div class="servant-item">EZA Thomas</div>
-                            <div class="servant-item">KONE Malick</div>
-                            <div class="servant-item">Jacques Séri</div>
-                            <div class="servant-item">AKO Loic</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Mercredi -->
-                    <div class="mass-day">
-                        <h3>Mercredi - Messe à 6h20</h3>
-                        <div class="servant-grid">
-                          <div class="servant-item">EZA Thomas</div>
-                            <div class="servant-item">KONE Malick</div>
-                            <div class="servant-item">Jacques Séri</div>
-                            <div class="servant-item">AKO Loic</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Jeudi -->
-                    <div class="mass-day">
-                        <h3>Jeudi - Messe à 6h20</h3>
-                        <div class="servant-grid">
-                           <div class="servant-item">EZA Thomas</div>
-                            <div class="servant-item">KONE Malick</div>
-                            <div class="servant-item">Jacques Séri</div>
-                            <div class="servant-item">AKO Loic</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Vendredi -->
-                    <div class="mass-day">
-                        <h3>Vendredi - Messe à 6h20</h3>
-                        <div class="servant-grid">
-                            <div class="servant-item">EZA Thomas</div>
-                            <div class="servant-item">KONE Malick</div>
-                            <div class="servant-item">Jacques Séri</div>
-                            <div class="servant-item">AKO Loic</div>
-                        </div>
-                    </div>
+<!-- Contenu du site (masqué initialement) -->
 
-                      <!-- Samedi -->
-                    <div class="mass-day">
-                        <h3>Samedi - Messe à 6h20</h3>
-                        <div class="servant-grid">
-                            <div class="servant-item">EZA Thomas</div>
-                            <div class="servant-item">KONE Malick</div>
-                            <div class="servant-item">Jacques Séri</div>
-                            <div class="servant-item">AKO Loic</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Samedi -->
-                    <div class="mass-day">
-                        <h3>Samedi - Messe à 18h30</h3>
-                        <div class="servant-grid">
-                              <div class="servant-item">Nogbou jean </div>
-                            <div class="servant-item">Koffi theo</div>
-                            <div class="servant-item">Joseph Bitty</div>
-                            <div class="servant-item">Brou axel</div>
-                            <div class="servant-item">Patrick Gbato</div>
-                            <div class="servant-item">Brou axel</div>
-                            <div class="servant-item">Bosson franck</div>
-                            <div class="servant-item">Don ange</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Dimanche -->
-                    <div class="mass-day">
-                        <h3>Dimanche - Messes à 6h30</h3>
-                        <div class="servant-grid">
-                              <div class="servant-item">Nogbou jean </div>
-                            <div class="servant-item">Koffi theo</div>
-                            <div class="servant-item">Joseph Bitty</div>
-                            <div class="servant-item">Brou axel</div>
-                            <div class="servant-item">Patrick Gbato</div>
-                            <div class="servant-item">Brou axel</div>
-                            <div class="servant-item">Bosson franck</div>
-                            <div class="servant-item">Don ange</div>
-                        </div>
-                    </div>
+<div class="site-content" id="site-content">
 
-                    
-                    <!-- Dimanche -->
-                    <div class="mass-day">
-                        <h3>Dimanche - 8h30</h3>
-                        <div class="servant-grid">
-                            <div class="servant-item">Nogbou jean </div>
-                            <div class="servant-item">Koffi theo</div>
-                            <div class="servant-item">Joseph Bitty</div>
-                            <div class="servant-item">Brou axel</div>
-                            <div class="servant-item">Patrick Gbato</div>
-                            <div class="servant-item">Brou axel</div>
-                            <div class="servant-item">Bosson franck</div>
-                            <div class="servant-item">Don ange</div>
-                        </div>
-                    </div>
+<!-- Header -->
 
-                    
-                    <!-- Dimanche -->
-                    <div class="mass-day">
-                        <h3>Dimanche -  10h00</h3>
-                        <div class="servant-grid">
-                            <div class="servant-item">Antoine Kouassi</div>
-                            <div class="servant-item">Françoise Akissi</div>
-                            <div class="servant-item">Joseph N'Dri</div>
-                            <div class="servant-item">Sylvie Toure</div>
-                            <div class="servant-item">Patrick Gbato</div>
-                            <div class="servant-item">Hélène Yao</div>
-                            <div class="servant-item">Gérard Konan</div>
-                            <div class="servant-item">Catherine Diabaté</div>
-                        </div>
-                    </div>
-                    <!-- Dimanche Hôpital -->
-                    <div class="mass-day">
-                        <h3>Dimanche - Messes à l'Hôpital: 9h00 et 11h00</h3>
-                        <div class="servant-grid">
-                            <div class="servant-item">Vincent Bamba</div>
-                            <div class="servant-item">Marguerite Séri</div>
-                            <div class="servant-item">Raphaël Kouamé</div>
-                            <div class="servant-item">Jeanne Coulibaly</div>
-                            <div class="servant-item">Albert Atta</div>
-                            <div class="servant-item">Louise Koffi</div>
-                            <div class="servant-item">Maurice Koné</div>
-                            <div class="servant-item">Brigitte Doumbia</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Jeudi Adoration -->
-                    <div class="mass-day">
-                        <h3>Jeudi - Adoration à 18h30</h3>
-                        <div class="servant-grid">
-                            <div class="servant-item">Étienne N'Guessan</div>
-                            <div class="servant-item">Claire Kouadio</div>
-                            <div class="servant-item">Didier Kouassi</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+<header>
 
-        <!-- Section Inspirante -->
-        <section id="inspiration" class="inspiration-section">
-            <div class="inspiration-content">
-                <h2>Votre Service, Une Vocation</h2>
-                <p>Servir à l'autel est un privilège et une grâce. À travers ce ministère, vous participez activement à la liturgie et devenez des témoins de la foi pour toute la communauté.</p>
-                
-                <div class="verse">
-                    "Comme je suis heureux de ceux qui habitent ta maison et qui peuvent te louer sans cesse !"
-                </div>
-                
-                <p>Le MJSA vous offre une formation complète pour grandir spirituellement tout en apprenant à servir avec dignité et piété. Rejoignez-nous dans cette belle aventure de fait !</p>
-                
-                <a href="#inscription" class="cta-button">Nous Rejoindre</a>
-            </div>
-        </section>
+<div class="header-container">
 
-        <!-- Footer -->
-        <footer>
-            <div class="footer-container">
-                <div class="footer-col">
-                    <h3>MJSA</h3>
-                    <p>Mouvement des Jeunes au Service de l'Autel<br>Paroisse Sainte Anne de Port-Bouët</p>
-                    <div class="social-links">
-                        <a href="#"><i>📱</i></a>
-                        <a href="#"><i>📘</i></a>
-                        <a href="#"><i>📸</i></a>
-                        <a href="#"><i>🐦</i></a>
-                    </div>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>Liens Rapides</h3>
-                    <ul class="footer-links">
-                        <li><a href="#accueil">Accueil</a></li>
-                        <li><a href="#apropos">À propos</a></li>
-                        <li><a href="#message">Mot du Responsable</a></li>
-                        <li><a href="#bibliotheque">Bibliothèque</a></li>
-                        <li><a href="#programmes">Programmes</a></li>
-                        <li><a href="#inspiration">Inspiration</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>Contact</h3>
-                    <p><i>📍</i> Paroisse Sainte Anne de Port-Bouët<br>Abidjan, Côte d'Ivoire</p>
-                    <p><i>📞</i> +225 01 52 99 91 26</p>
-                    <p><i>📞</i> +225 01 51 00 61 41</p>
-                    <p><i>📧</i> koffibossypatrick@gmail.com</p>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>&copy; 2025 MJSA - Mouvement des Jeunes au Service de l'Autel - Sainte Anne de Port-Bouët. Tous droits réservés.</p>
-            </div>
-        </footer>
-    </div>
+<div class="logo-container">
 
-    <script>
-        // Gestion de l'affichage des formulaires
-        document.getElementById('show-register').addEventListener('click', function() {
-            document.getElementById('login-form').style.display = 'none';
-            document.getElementById('register-form').style.display = 'block';
-        });
-        
-        document.getElementById('show-login').addEventListener('click', function() {
-            document.getElementById('register-form').style.display = 'none';
-            document.getElementById('login-form').style.display = 'block';
-        });
-        
-        // Gestion de la soumission du formulaire d'inscription
-        document.getElementById('register-form-element').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Validation des mots de passe
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
-            
-            if (password !== confirmPassword) {
-                alert('Les mots de passe ne correspondent pas.');
-                return;
-            }
-            
-            // Récupération des données du formulaire
-            const userData = {
-                nom: document.getElementById('nom').value,
-                prenom: document.getElementById('prenom').value,
-                email: document.getElementById('email').value,
-                dateNaissance: document.getElementById('date-naissance').value,
-                motivation: document.getElementById('motivation').value
-            };
-            
-            // Simulation d'un envoi réussi
-            simulateRegistration(userData);
-        });
-        
-        // Gestion de la soumission du formulaire de connexion
-        document.getElementById('login-form-element').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            
-            // Vérifier si l'utilisateur existe
-            const storedUser = JSON.parse(localStorage.getItem('mjsa_user'));
-            
-            if (storedUser && storedUser.email === email && storedUser.password === password) {
-                showSiteContent(storedUser);
-            } else {
-                alert('Email ou mot de passe incorrect.');
-            }
-        });
-        
-        // Gestion de la déconnexion
-        document.getElementById('logout-link').addEventListener('click', function(e) {
-            e.preventDefault();
-            localStorage.removeItem('mjsa_loggedIn');
-            document.getElementById('site-content').style.display = 'none';
-            document.getElementById('auth-section').style.display = 'flex';
-        });
-        
-        // Fonction pour simuler l'inscription
-        function simulateRegistration(userData) {
-            // Afficher un indicateur de chargement
-            const submitBtn = document.querySelector('#register-form-element .submit-btn');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Inscription en cours...';
-            submitBtn.disabled = true;
-            
-            // Simuler un délai d'enregistrement
-            setTimeout(function() {
-                // Enregistrer l'utilisateur dans le localStorage
-                userData.password = document.getElementById('password').value;
-                localStorage.setItem('mjsa_user', JSON.stringify(userData));
-                localStorage.setItem('mjsa_loggedIn', 'true');
-                
-                // Afficher le site avec les données utilisateur
-                showSiteContent(userData);
-                
-                // Restaurer le texte du bouton
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }, 1500);
-        }
-        
-        // Fonction pour afficher le contenu du site
-        function showSiteContent(userData) {
-            // Masquer la section d'authentification
-            document.getElementById('auth-section').style.display = 'none';
-            
-            // Afficher le contenu du site
-            document.getElementById('site-content').style.display = 'block';
-            
-            // Personnaliser le message de bienvenue
-            document.getElementById('user-name').textContent = userData.prenom + ' ' + userData.nom;
-            
-            // Démarrer le slider
-            initSlider();
-            
-            // Initialiser la lightbox
-            initLightbox();
-            
-            // Initialiser les onglets des programmes
-            initProgramTabs();
-        }
-        
-        // Vérifier si l'utilisateur est déjà connecté au chargement de la page
-        window.addEventListener('DOMContentLoaded', function() {
-            const isLoggedIn = localStorage.getItem('mjsa_loggedIn');
-            const userData = JSON.parse(localStorage.getItem('mjsa_user'));
-            
-            if (isLoggedIn && userData) {
-                showSiteContent(userData);
-            }
-        });
-        
-        // Script pour le slider
-        function initSlider() {
-            let currentSlide = 0;
-            const slides = document.querySelectorAll('.slide');
-            const dots = document.querySelectorAll('.dot');
-            const totalSlides = slides.length;
-            
-            function showSlide(index) {
-                if (index >= totalSlides) {
-                    currentSlide = 0;
-                } else if (index < 0) {
-                    currentSlide = totalSlides - 1;
-                } else {
-                    currentSlide = index;
-                }
-                
-                const slider = document.querySelector('.slider');
-                slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-                
-                // Mettre à jour les dots
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle('active', i === currentSlide);
-                });
-            }
-            
-            document.querySelector('.next-btn').addEventListener('click', () => {
-                showSlide(currentSlide + 1);
-            });
-            
-            document.querySelector('.prev-btn').addEventListener('click', () => {
-                showSlide(currentSlide - 1);
-            });
-            
-            dots.forEach((dot, i) => {
-                dot.addEventListener('click', () => {
-                    showSlide(i);
-                });
-            });
-            
-            // Auto-slide
-            setInterval(() => {
-                showSlide(currentSlide + 1);
-            }, 5000);
-        }
-        
-        // Menu mobile toggle
-        const menuToggle = document.querySelector('.menu-toggle');
-        const mainNav = document.getElementById('main-nav');
-        
-        if (menuToggle && mainNav) {
-            menuToggle.addEventListener('click', function() {
-                mainNav.classList.toggle('active');
-                this.classList.toggle('active');
-            });
-        }
-        
-        // Lightbox pour les images
-        function initLightbox() {
-            const lightbox = document.getElementById('lightbox');
-            const lightboxContent = document.getElementById('lightbox-content');
-            const lightboxCaption = document.getElementById('lightbox-caption');
-            const lightboxClose = document.getElementById('lightbox-close');
-            const mediaItems = document.querySelectorAll('.media-item');
-            
-            // Ouvrir la lightbox au clic sur une image
-            mediaItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    const imageUrl = this.getAttribute('data-image');
-                    const title = this.getAttribute('data-title');
-                    
-                    // Afficher l'image dans la lightbox
-                    lightboxContent.innerHTML = `<img src="${imageUrl}" alt="${title}">`;
-                    lightboxCaption.textContent = title;
-                    lightbox.style.display = 'flex';
-                });
-            });
-            
-            // Fermer la lightbox
-            lightboxClose.addEventListener('click', function() {
-                lightbox.style.display = 'none';
-            });
-            
-            // Fermer la lightbox en cliquant à l'extérieur du contenu
-            lightbox.addEventListener('click', function(e) {
-                if (e.target === lightbox) {
-                    lightbox.style.display = 'none';
-                }
-            });
-            
-            // Fermer la lightbox avec la touche Échap
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    lightbox.style.display = 'none';
-                }
-            });
-        }
-        
-        // Gestion des onglets des programmes
-        function initProgramTabs() {
-            const tabs = document.querySelectorAll('.program-tab');
-            
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    // Désactiver tous les onglets
-                    tabs.forEach(t => t.classList.remove('active'));
-                    
-                    // Activer l'onglet cliqué
-                    this.classList.add('active');
-                    
-                    // Masquer tous les contenus
-                    document.querySelectorAll('.program-content').forEach(content => {
-                        content.classList.remove('active');
-                    });
-                    
-                    // Afficher le contenu correspondant
-                    const tabId = this.getAttribute('data-tab');
-                    document.getElementById(`${tabId}-content`).classList.add('active');
-                });
-            });
-        }
-    </script>
+<img src="logo.jpeg" alt="Logo MJSA" class="logo">
+
+<div class="logo-text">
+
+<h1>MJSA</h1>
+
+<p>Mouvement des Jeunes au Service de l'Autel<br>Paroisse Sainte Anne de Port-Bouët</p>
+
+</div>
+
+</div>
+
+<button class="menu-toggle" aria-label="Toggle menu">
+
+<span></span>
+
+<span></span>
+
+<span></span>
+
+</button>
+
+<nav id="main-nav">
+
+<ul>
+
+<li><a href="#accueil">Accueil</a></li>
+
+<li><a href="#apropos">À propos</a></li>
+
+<li><a href="#message">Mot du Responsable</a></li>
+
+<li><a href="#bibliotheque">Bibliothèque</a></li>
+
+<li><a href="#programmes">Programmes</a></li>
+
+<li><a href="#inspiration">Inspiration</a></li>
+
+<li><a href="#" id="logout-link">Déconnexion</a></li>
+
+</ul>
+
+</nav>
+
+</div>
+
+</header>
+
+<!-- Message de bienvenue -->
+
+<div class="welcome-banner">
+
+<div class="container">
+
+<h2>Bienvenue, <span id="user-name">Cher Membre</span> !</h2>
+
+<p>Votre inscription a été réussie. Nous sommes ravis de vous compter parmi nous.</p>
+
+</div>
+
+</div>
+
+<!-- Slider -->
+
+<section id="accueil" class="slider-container">
+
+<div class="slider">
+
+<div class="slide">
+
+<img src="akichi.jpeg" alt="FONDATEUR DU MJSA">
+
+<div class="slide-content">
+
+<h2>feu Monseigneur joseph aka AKICHI</h2>
+
+<p>Rejoignez notre mouvement pour servir avec joie, respect, amour et fidelité</p>
+
+</div>
+
+</div>
+
+<div class="slide">
+
+<img src="jean luc .jpeg" alt="Retraite spirituelle">
+
+<div class="slide-content">
+
+<h2>Feu Père franciscain jean luc picault </h2>
+
+<p>Fondateur du MJSA</p>
+
+</div>
+
+</div>
+
+<div class="slide">
+
+<img src="tarcisus.jpeg" alt="Formation des servants">
+
+<div class="slide-content">
+
+<h2>Notre saint patron </h2>
+
+<p>Améliorez vos compétences pour mieux servir</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="slider-nav">
+
+<button class="prev-btn">&#10094;</button>
+
+<button class="next-btn">&#10095;</button>
+
+</div>
+
+<div class="slider-dots">
+
+<div class="dot active"></div>
+
+<div class="dot"></div>
+
+<div class="dot"></div>
+
+</div>
+
+</section>
+
+<!-- À propos -->
+
+<section id="apropos" class="section">
+
+<div class="section-title">
+
+<h2>À propos du MJSA</h2>
+
+</div>
+
+<div class="about-content">
+
+<div class="about-text">
+
+<p>Le Mouvement des Jeunes au Service de l'Autel (MJSA) de la Paroisse Sainte Anne de Port-Bouët est une organisation catholique qui rassemble des jeunes désireux de servir Dieu et l'Église à travers le service liturgique. fondé en 1988,le MJSA a pour mission de former des servants d'autel compétents, pieux et engagés dans leur foi.</p>
+
+<p>Notre mouvement offre une formation spirituelle, liturgique et humaine aux jeunes qui souhaitent participer activement à la célébration eucharistique. Nous tenons nos répétitions les mercredis de 15h à 17h et les formations les dimanches de 15h à a 17h</p>
+
+</div>
+
+<div class="about-image">
+
+<img src="gbpnhi.jpeg" alt="Groupe MJSA">
+
+</div>
+
+</div>
+
+</section>
+
+<!-- Mot du Responsable -->
+
+<section id="message" class="message-section">
+
+<img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Background" class="message-bg">
+
+<div class="message-container">
+
+<h2>Mot du Responsable</h2>
+
+<div class="message-content">
+
+<p>Chers jeunes servants, chers parents, chers membres de notre communauté paroissiale,</p>
+
+<p>En cette année dédiée à la jeunesse et au service liturgique, je tiens à vous exprimer toute ma gratitude pour votre engagement au sein du Mouvement des Jeunes au Service de l'Autel de la Paroisse Sainte Anne de Port-Bouët.</p>
+
+<p>Servir à l'autel n'est pas simplement une activité parmi d'autres, c'est une vocation sacrée qui vous rapproche chaque jour un peu plus du mystère eucharistique. À travers votre service, vous devenez des témoins vivants de la faith pour toute l'assemblée.</p>
+
+<div class="signature">R. BROU Axel-mary oswald</div>
+
+<div class="responsable-title">Responsable du MJSA - Sainte Anne de Port-Bouët</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- Bibliothèque Média COMPLÈTE -->
+
+<section id="bibliotheque" class="section media-library">
+
+<div class="section-title">
+
+<h2>Bibliothèque Média</h2>
+
+</div>
+
+<p style="text-align: center; margin-bottom: 2rem; color: var(--secondary);">Découvrez nos photos et vidéos des activités du MJSA. Cliquez sur une image pour l'agrandir.</p>
+
+<div class="media-gallery">
+
+<!-- Première ligne -->
+
+<div class="media-item" data-image="soutanelle.jpeg" data-title="Photo avec le gbonhi des magnifique enfants de choeur">
+
+<div class="media-thumbnail">
+
+<img src="soutanelle.jpeg" alt="Gbonhi des magnifique enfants de choeur">
+
+</div>
+
+<div class="media-info">
+
+<h3>Photo avec le gbonhi des magnifique enfants de choeur</h3>
+
+<div class="media-meta">
+
+<span>13 juillet 2025</span>
+
+<span class="media-type photo">Photo</span>
+
+</div>
+
+<div class="view-btn">Voir</div>
+
+</div>
+
+</div>
+
+<div class="media-item" data-image="theo.jpeg" data-title="Le petit diocesain">
+
+<div class="media-thumbnail">
+
+<img src="theo.jpeg" alt="Le petit diocesain">
+
+</div>
+
+<div class="media-info">
+
+<h3>Le petit Diocesain</h3>
+
+<div class="media-meta">
+
+<span>13 juillet 2025</span>
+
+<span class="media-type photo">Photo</span>
+
+</div>
+
+<div class="view-btn">Voir</div>
+
+</div>
+
+</div>
+
+<div class="media-item" data-image="les promettants.jpeg" data-title="Les nouveaux promettants">
+
+<div class="media-thumbnail">
+
+<img src="les promettants.jpeg" alt="Nouveaux promettants">
+
+</div>
+
+<div class="media-info">
+
+<h3>Les nouveaux promettants</h3>
+
+<div class="media-meta">
+
+<span>13 juillet 2025</span>
+
+<span class="media-type photo">Photo</span>
+
+</div>
+
+<div class="view-btn">Voir</div>
+
+</div>
+
+</div>
+
+<!-- Deuxième ligne -->
+
+<div class="media-item" data-image="catholique.jpeg" data-title="Quelque autre servants">
+
+<div class="media-thumbnail">
+
+<img src="catholique.jpeg" alt="Autres servants">
+
+</div>
+
+<div class="media-info">
+
+<h3>Quelque autre servants</h3>
+
+<div class="media-meta">
+
+<span>18 Avril 2025</span>
+
+<span class="media-type photo">Photo</span>
+
+</div>
+
+<div class="view-btn">Voir</div>
+
+</div>
+
+</div>
+
+<div class="media-item" data-image="dago.jpeg" data-title="Servant, missionnaire">
+
+<div class="media-thumbnail">
+
+<img src="dago.jpeg" alt="Servant missionnaire">
+
+</div>
+
+<div class="media-info">
+
+<h3>Servant, missionnaire</h3>
+
+<div class="media-meta">
+
+<span>13 mai 2025</span>
+
+<span class="media-type photo">Photo</span>
+
+</div>
+
+<div class="view-btn">Voir</div>
+
+</div>
+
+</div>
+
+<div class="media-item" data-image="famille.jpeg" data-title="Une famille où il fait bon vivre">
+
+<div class="media-thumbnail">
+
+<img src="famille.jpeg" alt="Famille MJSA">
+
+</div>
+
+<div class="media-info">
+
+<h3>Une famille où il fait bon vivre</h3>
+
+<div class="media-meta">
+
+<span>13 Mai 2024</span>
+
+<span class="media-type photo">Photo</span>
+
+</div>
+
+<div class="view-btn">Voir</div>
+
+</div>
+
+</div>
+
+<!-- Troisième ligne -->
+
+<div class="media-item" data-image="yoyo.jpeg" data-title="Le premier responsable">
+
+<div class="media-thumbnail">
+
+<img src="yoyo.jpeg" alt="Premier responsable">
+
+</div>
+
+<div class="media-info">
+
+<h3>Le premier responsable</h3>
+
+<div class="media-meta">
+
+<span>13 Avril 2025</span>
+
+<span class="media-type photo">Photo</span>
+
+</div>
+
+<div class="view-btn">Voir</div>
+
+</div>
+
+</div>
+
+<div class="media-item" data-image="tarcisus.jpeg" data-title="Notre saint patron">
+
+<div class="media-thumbnail">
+
+<img src="tarcisus.jpeg" alt="Saint patron">
+
+</div>
+
+<div class="media-info">
+
+<h3>Notre saint patron</h3>
+
+<div class="media-meta">
+
+<span>13 Avril 2025</span>
+
+<span class="media-type photo">Photo</span>
+
+</div>
+
+<div class="view-btn">Voir</div>
+
+</div>
+
+</div>
+
+<div class="media-item" data-image="respo.jpeg" data-title="Quelque responsable">
+
+<div class="media-thumbnail">
+
+<img src="respo.jpeg" alt="Responsables MJSA">
+
+</div>
+
+<div class="media-info">
+
+<h3>Quelque responsable</h3>
+
+<div class="media-meta">
+
+<span>15 Mai 2025</span>
+
+<span class="media-type photo">Photo</span>
+
+</div>
+
+<div class="view-btn">Voir</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- Section Programmes -->
+
+<section id="programmes" class="section program-section">
+
+<div class="section-title">
+
+<h2>Programmes d'Activités & Programmes des Messe</h2>
+
+</div>
+
+<div class="program-tabs">
+
+<div class="program-tab active" data-tab="activities">Activités</div>
+
+<div class="program-tab" data-tab="masses">Messes</div>
+
+</div>
+
+<div class="program-content active" id="activities-content">
+
+<h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--blue-dark);">Programme d'Activités 2025-2026</h3>
+
+<table class="schedule-table">
+
+<thead>
+
+<tr>
+
+<th>Date</th>
+
+<th>Activité</th>
+
+<th>Lieu</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>02 Novembre 2025</td>
+
+<td>Prière collective d'ouverture</td>
+
+<td>Paroisse sainte Anne de Port-Bouet</td>
+
+</tr>
+
+<tr>
+
+<td>29 Novembre 2025</td>
+
+<td>24h de prière</td>
+
+<td>Chapelle de l'hopital</td>
+
+</tr>
+
+<tr>
+
+<td>27 Decembre 2025</td>
+
+<td>MJSA CHAMPIONSHIP</td>
+
+<td>Terrain de l'ecole de la mission</td>
+
+</tr>
+
+<tr>
+
+<td>03 Janvier 2026</td>
+
+<td>Journée récréative</td>
+
+<td>Paroisse sainte Anne de Port-Bouet</td>
+
+</tr>
+
+<tr>
+
+<td>24 Janvier 2026</td>
+
+<td>MJSA CHAMPIONSHIP</td>
+
+<td>Terrain de l'ecole de la mission</td>
+
+</tr>
+
+<tr>
+
+<td>31 Janvier 2026</td>
+
+<td>24h de prière</td>
+
+<td>Chapelle de l'hopital</td>
+
+</tr>
+
+<tr>
+
+<td>19 Février 2026</td>
+
+<td>Visite guidée</td>
+
+<td>À déterminer</td>
+
+</tr>
+
+<tr>
+
+<td>28 Février 2026</td>
+
+<td>MJSA CHAMPIONSHIP</td>
+
+<td>Terrain de l'ecole de la mission</td>
+
+</tr>
+
+<tr>
+
+<td>01 Mars 2026</td>
+
+<td>Visite fraternelle</td>
+
+<td>Paroisse cœur immaculé de marie Imperial de Bassam </td>
+
+</tr>
+
+<tr>
+
+<td>05 Avril 2026</td>
+
+<td>Répétition générale Semaine Sainte</td>
+
+<td>Église Sainte Anne</td>
+
+</tr>
+
+<tr>
+
+<td>18-20 Avril 2026</td>
+
+<td>MJSA CHAMPIONSHIP</td>
+
+<td>Terrain de l'ecole de la mission</td>
+
+</tr>
+
+<tr>
+
+<td>28 Mai 2025</td>
+
+<td>24h de prière</td>
+
+<td>Chapelle de l'hopital</td>
+
+</tr>
+
+<tr>
+
+<td>04 Avril 2026</td>
+
+<td>MJSA CHAMPIONSHIP</td>
+
+<td>Terrain de l'ecole de la mission</td>
+
+</tr>
+
+<tr>
+
+<td>10 Avril 2026</td>
+
+<td>Journée fraternelle avec les CVAV</td>
+
+<td>Paroisse sainte Anne de Port-Bouet</td>
+
+</tr>
+
+<tr>
+
+<td> MAI 2026</td>
+
+<td>Promesse Diocésaine</td>
+
+<td>À determiner</td>
+
+</tr>
+
+<tr>
+
+<td>23 MAI 2026</td>
+
+<td>MJSA CHAMPIONSHIP</td>
+
+<td>Terrain de l'ecole de la mission</td>
+
+</tr>
+
+<tr>
+
+<td>30 MAI 2026</td>
+
+<td>24h de prière</td>
+
+<td>Chapelle de l'hopital</td>
+
+</tr>
+
+<tr>
+
+<td>07 Juin 2026</td>
+
+<td>Ceremonie de prise d 'Aubes et de prise de croix</td>
+
+<td>Paroisse sainte Anne</td>
+
+</tr>
+
+<tr>
+
+<td> Juillet 2026</td>
+
+<td>Secteur Bonoua ou Aboisso</td>
+
+<td>Camp de formation</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<div class="program-content" id="masses-content">
+
+<h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--blue-dark);">Programme des Messes Hebdomadaires</h3>
+
+<div class="mass-schedule">
+
+<!-- Lundi -->
+
+<div class="mass-day">
+
+<h3>Lundi - Messe à 6h20</h3>
+
+<div class="servant-grid">
+
+<div class="servant-item">EZA Thomas</div>
+
+<div class="servant-item">KONE Malick</div>
+
+<div class="servant-item">Jacques Séri</div>
+
+<div class="servant-item">AKO Loic</div>
+
+</div>
+
+</div>
+
+<!-- Mardi -->
+
+<div class="mass-day">
+
+<h3>Mardi - Messe à 6h20</h3>
+
+<div class="servant-grid">
+
+<div class="servant-item">EZA Thomas</div>
+
+<div class="servant-item">KONE Malick</div>
+
+<div class="servant-item">Jacques Séri</div>
+
+<div class="servant-item">AKO Loic</div>
+
+</div>
+
+</div>
+
+<!-- Mercredi -->
+
+<div class="mass-day">
+
+<h3>Mercredi - Messe à 6h20</h3>
+
+<div class="servant-grid">
+
+<div class="servant-item">EZA Thomas</div>
+
+<div class="servant-item">KONE Malick</div>
+
+<div class="servant-item">Jacques Séri</div>
+
+<div class="servant-item">AKO Loic</div>
+
+</div>
+
+</div>
+
+<!-- Jeudi -->
+
+<div class="mass-day">
+
+<h3>Jeudi - Messe à 6h20</h3>
+
+<div class="servant-grid">
+
+<div class="servant-item">EZA Thomas</div>
+
+<div class="servant-item">KONE Malick</div>
+
+<div class="servant-item">Jacques Séri</div>
+
+<div class="servant-item">AKO Loic</div>
+
+</div>
+
+</div>
+
+<!-- Vendredi -->
+
+<div class="mass-day">
+
+<h3>Vendredi - Messe à 6h20</h3>
+
+<div class="servant-grid">
+
+<div class="servant-item">EZA Thomas</div>
+
+<div class="servant-item">KONE Malick</div>
+
+<div class="servant-item">Jacques Séri</div>
+
+<div class="servant-item">AKO Loic</div>
+
+</div>
+
+</div>
+
+<!-- Samedi -->
+
+<div class="mass-day">
+
+<h3>Samedi - Messe à 6h20</h3>
+
+<div class="servant-grid">
+
+<div class="servant-item">EZA Thomas</div>
+
+<div class="servant-item">KONE Malick</div>
+
+<div class="servant-item">Jacques Séri</div>
+
+<div class="servant-item">AKO Loic</div>
+
+</div>
+
+</div>
+
+<!-- Samedi -->
+
+<div class="mass-day">
+
+<h3>Samedi - Messe à 18h30</h3>
+
+<div class="servant-grid">
+
+<div class="servant-item">Nogbou jean </div>
+
+<div class="servant-item">Koffi theo</div>
+
+<div class="servant-item">Joseph Bitty</div>
+
+<div class="servant-item">Brou axel</div>
+
+<div class="servant-item">Patrick Gbato</div>
+
+<div class="servant-item">Brou axel</div>
+
+<div class="servant-item">Bosson franck</div>
+
+<div class="servant-item">Don ange</div>
+
+</div>
+
+</div>
+
+<!-- Dimanche -->
+
+<div class="mass-day">
+
+<h3>Dimanche - Messes à 6h30</h3>
+
+<div class="servant-grid">
+
+<div class="servant-item">Nogbou jean </div>
+
+<div class="servant-item">Koffi theo</div>
+
+<div class="servant-item">Joseph Bitty</div>
+
+<div class="servant-item">Brou axel</div>
+
+<div class="servant-item">Patrick Gbato</div>
+
+<div class="servant-item">Brou axel</div>
+
+<div class="servant-item">Bosson franck</div>
+
+<div class="servant-item">Don ange</div>
+
+</div>
+
+</div>
+
+<!-- Dimanche -->
+
+<div class="mass-day">
+
+<h3>Dimanche - 8h30</h3>
+
+<div class="servant-grid">
+
+<div class="servant-item">Nogbou jean </div>
+
+<div class="servant-item">Koffi theo</div>
+
+<div class="servant-item">Joseph Bitty</div>
+
+<div class="servant-item">Brou axel</div>
+
+<div class="servant-item">Patrick Gbato</div>
+
+<div class="servant-item">Brou axel</div>
+
+<div class="servant-item">Bosson franck</div>
+
+<div class="servant-item">Don ange</div>
+
+</div>
+
+</div>
+
+<!-- Dimanche -->
+
+<div class="mass-day">
+
+<h3>Dimanche - 10h00</h3>
+
+<div class="servant-grid">
+
+<div class="servant-item">Antoine Kouassi</div>
+
+<div class="servant-item">Françoise Akissi</div>
+
+<div class="servant-item">Joseph N'Dri</div>
+
+<div class="servant-item">Sylvie Toure</div>
+
+<div class="servant-item">Patrick Gbato</div>
+
+<div class="servant-item">Hélène Yao</div>
+
+<div class="servant-item">Gérard Konan</div>
+
+<div class="servant-item">Catherine Diabaté</div>
+
+</div>
+
+</div>
+
+<!-- Dimanche Hôpital -->
+
+<div class="mass-day">
+
+<h3>Dimanche - Messes à l'Hôpital: 9h00 et 11h00</h3>
+
+<div class="servant-grid">
+
+<div class="servant-item">Vincent Bamba</div>
+
+<div class="servant-item">Marguerite Séri</div>
+
+<div class="servant-item">Raphaël Kouamé</div>
+
+<div class="servant-item">Jeanne Coulibaly</div>
+
+<div class="servant-item">Albert Atta</div>
+
+<div class="servant-item">Louise Koffi</div>
+
+<div class="servant-item">Maurice Koné</div>
+
+<div class="servant-item">Brigitte Doumbia</div>
+
+</div>
+
+</div>
+
+<!-- Jeudi Adoration -->
+
+<div class="mass-day">
+
+<h3>Jeudi - Adoration à 18h30</h3>
+
+<div class="servant-grid">
+
+<div class="servant-item">Étienne N'Guessan</div>
+
+<div class="servant-item">Claire Kouadio</div>
+
+<div class="servant-item">Didier Kouassi</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- Section Inspirante -->
+
+<section id="inspiration" class="inspiration-section">
+
+<div class="inspiration-content">
+
+<h2>Votre Service, Une Vocation</h2>
+
+<p>Servir à l'autel est un privilège et une grâce. À travers ce ministère, vous participez activement à la liturgie et devenez des témoins de la foi pour toute la communauté.</p>
+
+<div class="verse">
+
+"Comme je suis heureux de ceux qui habitent ta maison et qui peuvent te louer sans cesse !"
+
+</div>
+
+<p>Le MJSA vous offre une formation complète pour grandir spirituellement tout en apprenant à servir avec dignité et piété. Rejoignez-nous dans cette belle aventure de fait !</p>
+
+<a href="#inscription" class="cta-button">Nous Rejoindre</a>
+
+</div>
+
+</section>
+
+<!-- Footer -->
+
+<footer>
+
+<div class="footer-container">
+
+<div class="footer-col">
+
+<h3>MJSA</h3>
+
+<p>Mouvement des Jeunes au Service de l'Autel<br>Paroisse Sainte Anne de Port-Bouët</p>
+
+<div class="social-links">
+
+<a href="#"><i>📱</i></a>
+
+<a href="#"><i>📘</i></a>
+
+<a href="#"><i>📸</i></a>
+
+<a href="#"><i>🐦</i></a>
+
+</div>
+
+</div>
+
+<div class="footer-col">
+
+<h3>Liens Rapides</h3>
+
+<ul class="footer-links">
+
+<li><a href="#accueil">Accueil</a></li>
+
+<li><a href="#apropos">À propos</a></li>
+
+<li><a href="#message">Mot du Responsable</a></li>
+
+<li><a href="#bibliotheque">Bibliothèque</a></li>
+
+<li><a href="#programmes">Programmes</a></li>
+
+<li><a href="#inspiration">Inspiration</a></li>
+
+</ul>
+
+</div>
+
+<div class="footer-col">
+
+<h3>Contact</h3>
+
+<p><i>📍</i> Paroisse Sainte Anne de Port-Bouët<br>Abidjan, Côte d'Ivoire</p>
+
+<p><i>📞</i> +225 01 52 99 91 26</p>
+
+<p><i>📞</i> +225 01 51 00 61 41</p>
+
+<p><i>📧</i> koffibossypatrick@gmail.com</p>
+
+</div>
+
+</div>
+
+<div class="copyright">
+
+<p>&copy; 2025 MJSA - Mouvement des Jeunes au Service de l'Autel - Sainte Anne de Port-Bouët. Tous droits réservés.</p>
+
+</div>
+
+</footer>
+
+</div>
+
+<script>
+
+// Gestion de l'affichage des formulaires
+
+document.getElementById('show-register').addEventListener('click', function() {
+
+document.getElementById('login-form').style.display = 'none';
+
+document.getElementById('register-form').style.display = 'block';
+
+});
+
+document.getElementById('show-login').addEventListener('click', function() {
+
+document.getElementById('register-form').style.display = 'none';
+
+document.getElementById('login-form').style.display = 'block';
+
+});
+
+// Gestion de la soumission du formulaire d'inscription
+
+document.getElementById('register-form-element').addEventListener('submit', function(e) {
+
+e.preventDefault();
+
+// Validation des mots de passe
+
+const password = document.getElementById('password').value;
+
+const confirmPassword = document.getElementById('confirm-password').value;
+
+if (password !== confirmPassword) {
+
+alert('Les mots de passe ne correspondent pas.');
+
+return;
+
+}
+
+// Récupération des données du formulaire
+
+const userData = {
+
+nom: document.getElementById('nom').value,
+
+prenom: document.getElementById('prenom').value,
+
+email: document.getElementById('email').value,
+
+dateNaissance: document.getElementById('date-naissance').value,
+
+motivation: document.getElementById('motivation').value
+
+};
+
+// Simulation d'un envoi réussi
+
+simulateRegistration(userData);
+
+});
+
+// Gestion de la soumission du formulaire de connexion
+
+document.getElementById('login-form-element').addEventListener('submit', function(e) {
+
+e.preventDefault();
+
+const email = document.getElementById('login-email').value;
+
+const password = document.getElementById('login-password').value;
+
+// Vérifier si l'utilisateur existe
+
+const storedUser = JSON.parse(localStorage.getItem('mjsa_user'));
+
+if (storedUser && storedUser.email === email && storedUser.password === password) {
+
+showSiteContent(storedUser);
+
+} else {
+
+alert('Email ou mot de passe incorrect.');
+
+}
+
+});
+
+// Gestion de la déconnexion
+
+document.getElementById('logout-link').addEventListener('click', function(e) {
+
+e.preventDefault();
+
+localStorage.removeItem('mjsa_loggedIn');
+
+document.getElementById('site-content').style.display = 'none';
+
+document.getElementById('auth-section').style.display = 'flex';
+
+});
+
+// Fonction pour simuler l'inscription
+
+function simulateRegistration(userData) {
+
+// Afficher un indicateur de chargement
+
+const submitBtn = document.querySelector('#register-form-element .submit-btn');
+
+const originalText = submitBtn.textContent;
+
+submitBtn.textContent = 'Inscription en cours...';
+
+submitBtn.disabled = true;
+
+// Simuler un délai d'enregistrement
+
+setTimeout(function() {
+
+// Enregistrer l'utilisateur dans le localStorage
+
+userData.password = document.getElementById('password').value;
+
+localStorage.setItem('mjsa_user', JSON.stringify(userData));
+
+localStorage.setItem('mjsa_loggedIn', 'true');
+
+// Afficher le site avec les données utilisateur
+
+showSiteContent(userData);
+
+// Restaurer le texte du bouton
+
+submitBtn.textContent = originalText;
+
+submitBtn.disabled = false;
+
+}, 1500);
+
+}
+
+// Fonction pour afficher le contenu du site
+
+function showSiteContent(userData) {
+
+// Masquer la section d'authentification
+
+document.getElementById('auth-section').style.display = 'none';
+
+// Afficher le contenu du site
+
+document.getElementById('site-content').style.display = 'block';
+
+// Personnaliser le message de bienvenue
+
+document.getElementById('user-name').textContent = userData.prenom + ' ' + userData.nom;
+
+// Démarrer le slider
+
+initSlider();
+
+// Initialiser la lightbox
+
+initLightbox();
+
+// Initialiser les onglets des programmes
+
+initProgramTabs();
+
+}
+
+// Vérifier si l'utilisateur est déjà connecté au chargement de la page
+
+window.addEventListener('DOMContentLoaded', function() {
+
+const isLoggedIn = localStorage.getItem('mjsa_loggedIn');
+
+const userData = JSON.parse(localStorage.getItem('mjsa_user'));
+
+if (isLoggedIn && userData) {
+
+showSiteContent(userData);
+
+}
+
+});
+
+// Script pour le slider
+
+function initSlider() {
+
+let currentSlide = 0;
+
+const slides = document.querySelectorAll('.slide');
+
+const dots = document.querySelectorAll('.dot');
+
+const totalSlides = slides.length;
+
+function showSlide(index) {
+
+if (index >= totalSlides) {
+
+currentSlide = 0;
+
+} else if (index < 0) {
+
+currentSlide = totalSlides - 1;
+
+} else {
+
+currentSlide = index;
+
+}
+
+const slider = document.querySelector('.slider');
+
+slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+// Mettre à jour les dots
+
+dots.forEach((dot, i) => {
+
+dot.classList.toggle('active', i === currentSlide);
+
+});
+
+}
+
+document.querySelector('.next-btn').addEventListener('click', () => {
+
+showSlide(currentSlide + 1);
+
+});
+
+document.querySelector('.prev-btn').addEventListener('click', () => {
+
+showSlide(currentSlide - 1);
+
+});
+
+dots.forEach((dot, i) => {
+
+dot.addEventListener('click', () => {
+
+showSlide(i);
+
+});
+
+});
+
+// Auto-slide
+
+setInterval(() => {
+
+showSlide(currentSlide + 1);
+
+}, 5000);
+
+}
+
+// Menu mobile toggle
+
+const menuToggle = document.querySelector('.menu-toggle');
+
+const mainNav = document.getElementById('main-nav');
+
+if (menuToggle && mainNav) {
+
+menuToggle.addEventListener('click', function() {
+
+mainNav.classList.toggle('active');
+
+this.classList.toggle('active');
+
+});
+
+}
+
+// Lightbox pour les images
+
+function initLightbox() {
+
+const lightbox = document.getElementById('lightbox');
+
+const lightboxContent = document.getElementById('lightbox-content');
+
+const lightboxCaption = document.getElementById('lightbox-caption');
+
+const lightboxClose = document.getElementById('lightbox-close');
+
+const mediaItems = document.querySelectorAll('.media-item');
+
+// Ouvrir la lightbox au clic sur une image
+
+mediaItems.forEach(item => {
+
+item.addEventListener('click', function() {
+
+const imageUrl = this.getAttribute('data-image');
+
+const title = this.getAttribute('data-title');
+
+// Afficher l'image dans la lightbox
+
+lightboxContent.innerHTML = `<img src="${imageUrl}" alt="${title}">`;
+
+lightboxCaption.textContent = title;
+
+lightbox.style.display = 'flex';
+
+});
+
+});
+
+// Fermer la lightbox
+
+lightboxClose.addEventListener('click', function() {
+
+lightbox.style.display = 'none';
+
+});
+
+// Fermer la lightbox en cliquant à l'extérieur du contenu
+
+lightbox.addEventListener('click', function(e) {
+
+if (e.target === lightbox) {
+
+lightbox.style.display = 'none';
+
+}
+
+});
+
+// Fermer la lightbox avec la touche Échap
+
+document.addEventListener('keydown', function(e) {
+
+if (e.key === 'Escape') {
+
+lightbox.style.display = 'none';
+
+}
+
+});
+
+}
+
+// Gestion des onglets des programmes
+
+function initProgramTabs() {
+
+const tabs = document.querySelectorAll('.program-tab');
+
+tabs.forEach(tab => {
+
+tab.addEventListener('click', function() {
+
+// Désactiver tous les onglets
+
+tabs.forEach(t => t.classList.remove('active'));
+
+// Activer l'onglet cliqué
+
+this.classList.add('active');
+
+// Masquer tous les contenus
+
+document.querySelectorAll('.program-content').forEach(content => {
+
+content.classList.remove('active');
+
+});
+
+// Afficher le contenu correspondant
+
+const tabId = this.getAttribute('data-tab');
+
+document.getElementById(`${tabId}-content`).classList.add('active');
+
+});
+
+});
+
+}
+
+</script>
+
 </body>
+
 </html>

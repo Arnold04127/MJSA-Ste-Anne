@@ -13,29 +13,20 @@ const PHOTOS = [
   ["respo.jpeg", "Quelques responsables", "15 mai 2025"]
 ];
 
-const MISSION = "Terrain de l'école de la mission";
-const CHAPELLE = "Chapelle de l'hôpital";
-const PAROISSE = "Paroisse Sainte Anne de Port-Bouët";
+const ECOLE = "École Sainte Anne de Port-Bouët";
+const PAROISSE = "Paroisse Sainte Anne";
 const ACTIVITES = [
-  ["02 novembre 2025", "Prière collective d'ouverture", PAROISSE],
-  ["29 novembre 2025", "24h de prière", CHAPELLE],
-  ["27 décembre 2025", "MJSA Championship", MISSION],
-  ["03 janvier 2026", "Journée récréative", PAROISSE],
-  ["24 janvier 2026", "MJSA Championship", MISSION],
-  ["31 janvier 2026", "24h de prière", CHAPELLE],
-  ["19 février 2026", "Visite guidée", "À déterminer"],
-  ["28 février 2026", "MJSA Championship", MISSION],
-  ["01 mars 2026", "Visite fraternelle", "Paroisse Cœur Immaculé de Marie, Impérial de Bassam"],
-  ["28 mars 2026", "24h de prière", CHAPELLE], /* ancien texte : « 28 Mai 2025 », à vérifier */
-  ["04 avril 2026", "MJSA Championship", MISSION],
-  ["05 avril 2026", "Répétition générale Semaine Sainte", "Église Sainte Anne"],
-  ["10 avril 2026", "Journée fraternelle avec les CVAV", PAROISSE],
-  ["18-20 avril 2026", "MJSA Championship", MISSION],
-  ["Mai 2026", "Promesse diocésaine", "À déterminer"],
-  ["23 mai 2026", "MJSA Championship", MISSION],
-  ["30 mai 2026", "24h de prière", CHAPELLE],
-  ["07 juin 2026", "Cérémonie de prise d'aubes et de prise de croix", "Paroisse Sainte Anne"],
-  ["Juillet 2026", "Camp de formation, secteur Bonoua ou Aboisso", "À déterminer"]
+  ["Dimanche 13 décembre 2026", "Début du tournoi des servants (J1)", ECOLE],
+  ["Dimanche 13 décembre 2026", "Récollection du temps de l'Avent", ECOLE],
+  ["À déterminer (février 2027)", "Visite guidée au phare de Port-Bouët", "Port-Bouët, phare"],
+  ["Dimanche 7 mars 2027", "Visite fraternelle", "Paroisse Cœur Immaculé de Marie d'Impérial ou Nda Koumassi"],
+  ["Dimanche 14 mars 2027", "Tournoi des servants (J2)", ECOLE],
+  ["Dimanche 14 mars 2027", "Récollection du temps de carême", ECOLE],
+  ["À déterminer (mars 2027)", "Mini camp de formation avec la paroisse Saint Jean-Marie Vianney, Vridi Cité", "À déterminer"],
+  ["À déterminer", "Journée inter mouvement (avec le mouvement de la Sainte Enfance Missionnaire)", PAROISSE],
+  ["À déterminer", "Visite guidée à l'Assemblée nationale et chez les Pompiers", "Abidjan-Plateau"],
+  ["Du dimanche 4 au dimanche 11 juillet 2027", "Semaine du serviteur", PAROISSE],
+  ["À déterminer (juillet 2027)", "Camp de formation paroissial", "À déterminer"]
 ];
 
 const MESSES = [

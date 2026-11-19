@@ -1,5 +1,5 @@
 /* ===== Données : modifie ici, pas dans le HTML ===== */
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwUZwEf5BEaC2emhDUxN7qwpuVw_0xsOctLSOLXYgZ8k-YiVZp9w8zmU_9wKZSitOcj/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwHkonufJDQtZ5OOmAd5peaR9y6DQvYHLJ0J88HCT3iMdx9jQw7v_Xyrd4ALL72P7lPWA/exec";
 
 const PHOTOS = [
   ["soutanelle.jpeg", "Photo avec le gbonhi des magnifiques enfants de chœur", "13 juillet 2025"],

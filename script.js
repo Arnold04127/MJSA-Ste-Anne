@@ -155,8 +155,13 @@ function initForm() {
     btn.textContent = "Envoi en cours…";
     status.className = "form-status";
     try {
-      const res = await fetch(SCRIPT_URL, { method: "POST", body: new FormData(form) });
-      if (!res.ok) throw new Error(res.statusText);
+      /* no-cors : Google Apps Script ne renvoie pas d'en-têtes CORS, la réponse est "opaque".
+         Si fetch ne plante pas, la requête est bien partie. */
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body: new URLSearchParams(new FormData(form))
+      });
       show("ok", "Merci ! Votre demande est enregistrée. Un responsable vous contactera.");
       form.reset();
     } catch (err) {

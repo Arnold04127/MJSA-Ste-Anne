@@ -1,5 +1,6 @@
 /* ===== Données : modifie ici, pas dans le HTML ===== */
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwHkonufJDQtZ5OOmAd5peaR9y6DQvYHLJ0J88HCT3iMdx9jQw7v_Xyrd4ALL72P7lPWA/exec";
+/* Clé gratuite reçue par email sur web3forms.com (elle peut rester visible dans le code) */
+const WEB3FORMS_KEY = "COLLE_TA_CLE_ICI";
 
 const PHOTOS = [
   ["soutanelle.jpeg", "Photo avec le gbonhi des magnifiques enfants de chœur", "13 juillet 2025"],
@@ -141,7 +142,7 @@ function initTabs() {
   }));
 }
 
-/* ===== Inscription -> Google Sheets ===== */
+/* ===== Inscription -> email via Web3Forms ===== */
 function initForm() {
   const form = $("#registration-form"), status = $("#form-status"), btn = $(".submit-btn", form);
   const show = (cls, msg) => { status.className = "form-status " + cls; status.textContent = msg; };
@@ -155,13 +156,16 @@ function initForm() {
     btn.textContent = "Envoi en cours…";
     status.className = "form-status";
     try {
-      /* no-cors : Google Apps Script ne renvoie pas d'en-têtes CORS, la réponse est "opaque".
-         Si fetch ne plante pas, la requête est bien partie. */
-      await fetch(SCRIPT_URL, {
-        method: "POST",
-        mode: "no-cors",
-        body: new URLSearchParams(new FormData(form))
-      });
+      const data = new FormData(form);
+      data.delete("website");
+      data.append("access_key", WEB3FORMS_KEY);
+      data.append("subject", "Nouvelle inscription MJSA : " + form.prenom.value + " " + form.nom.value);
+      data.append("from_name", "Site MJSA");
+
+      const res = await fetch("https://api.web3forms.com/submit", { method: "POST", body: data });
+      const json = await res.json();
+      if (!json.success) throw new Error(json.message || "Erreur Web3Forms");
+
       show("ok", "Merci ! Votre demande est enregistrée. Un responsable vous contactera.");
       form.reset();
     } catch (err) {

@@ -1,6 +1,11 @@
 /* ===== Données : modifie ici, pas dans le HTML ===== */
 /* Clé gratuite reçue par email sur web3forms.com (elle peut rester visible dans le code) */
-const WEB3FORMS_KEY = "ta-cle-ici";
+const WEB3FORMS_KEY = "a0bd8cc1-d50f-451d-81f1-dcd2cea83fa3";
+
+/* Base de données Supabase (clé publique "anon" ou "publishable", jamais la clé secrète) */
+const SUPABASE_URL = "https://ekhlcsfuulupwjrpaxor.supabase.co";
+const SUPABASE_KEY = "sb_publishable_6mjgPmu5o0lXdIBH8qCcrQ_VW7F3wHW";
+
 const PHOTOS = [
   ["soutanelle.jpeg", "Photo avec le gbonhi des magnifiques enfants de chœur", "13 juillet 2025"],
   ["theo.jpeg", "Le petit diocésain", "13 juillet 2025"],
@@ -141,7 +146,7 @@ function initTabs() {
   }));
 }
 
-/* ===== Inscription -> email via Web3Forms ===== */
+/* ===== Inscription -> base Supabase + email Web3Forms ===== */
 function initForm() {
   const form = $("#registration-form"), status = $("#form-status"), btn = $(".submit-btn", form);
   const show = (cls, msg) => { status.className = "form-status " + cls; status.textContent = msg; };
@@ -155,15 +160,35 @@ function initForm() {
     btn.textContent = "Envoi en cours…";
     status.className = "form-status";
     try {
+      const f = Object.fromEntries(new FormData(form));
+
+      /* 1. Stockage dans la base de données */
+      const saveDb = fetch(SUPABASE_URL + "/rest/v1/inscriptions", {
+        method: "POST",
+        headers: { apikey: SUPABASE_KEY, "Content-Type": "application/json", Prefer: "return=minimal" },
+        body: JSON.stringify({
+          nom: f.nom, prenom: f.prenom, email: f.email,
+          telephone: f.telephone || null,
+          date_naissance: f.date_naissance || null,
+          motivation: f.motivation || null
+        })
+      }).then(r => { if (!r.ok) throw new Error("Supabase " + r.status); });
+
+      /* 2. Email de notification */
       const data = new FormData(form);
       data.delete("website");
       data.append("access_key", WEB3FORMS_KEY);
-      data.append("subject", "Nouvelle inscription MJSA : " + form.prenom.value + " " + form.nom.value);
+      data.append("subject", "Nouvelle inscription MJSA : " + f.prenom + " " + f.nom);
       data.append("from_name", "Site MJSA");
+      const sendMail = fetch("https://api.web3forms.com/submit", { method: "POST", body: data })
+        .then(r => r.json())
+        .then(j => { if (!j.success) throw new Error(j.message || "Erreur Web3Forms"); });
 
-      const res = await fetch("https://api.web3forms.com/submit", { method: "POST", body: data });
-      const json = await res.json();
-      if (!json.success) throw new Error(json.message || "Erreur Web3Forms");
+      /* Succès si au moins l'un des deux a fonctionné */
+      const [db, mail] = await Promise.allSettled([saveDb, sendMail]);
+      if (db.status === "rejected") console.error("Base de données :", db.reason);
+      if (mail.status === "rejected") console.error("Email :", mail.reason);
+      if (db.status === "rejected" && mail.status === "rejected") throw new Error("Aucun envoi n'a fonctionné");
 
       show("ok", "Merci ! Votre demande est enregistrée. Un responsable vous contactera.");
       form.reset();

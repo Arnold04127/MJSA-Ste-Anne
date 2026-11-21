@@ -229,3 +229,16 @@ nav a{font-size:.88rem}
 .infos-item strong{font-size:1.5rem}
 .infos-item span{font-size:.95rem}
 }
+
+/* ===== Cartes des messes ===== */
+.mass-day{padding:0;overflow:hidden}
+.mass-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.9rem 1.1rem;background:var(--tint);border-bottom:1px solid var(--line)}
+.mass-head h3{margin:0;padding:0;border:0;font-size:1.15rem;color:var(--red)}
+.mass-type{display:block;font-size:.85rem;color:var(--muted)}
+.mass-time{font-family:Georgia,serif;font-weight:700;font-size:1.1rem;color:#fff;background:var(--red);border-radius:4px;padding:.35rem .8rem;white-space:nowrap}
+.mass-day .servant-grid{padding:1rem 1.1rem}
+.servant-empty{grid-column:1/-1;color:var(--muted);font-style:italic;padding:.3rem 0}
+@media(min-width:769px){
+#masses-list{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.mass-day{margin-bottom:0}
+}

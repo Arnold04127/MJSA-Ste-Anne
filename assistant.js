@@ -74,7 +74,7 @@
       reply: () => ({ text: "Le MJSA (Mouvement des Jeunes au Service de l'Autel) de la paroisse Sainte Anne de Port-Bouët rassemble des jeunes qui veulent servir Dieu et l'Église par le service liturgique. Fondé en 1988, il offre une formation spirituelle, liturgique et humaine aux servants d'autel.", links: [["En savoir plus", "#apropos"]] }) }
   ];
 
-    /* Petites conversations (placées après les autres sujets pour ne jamais les gêner) */
+  /* Petites conversations (placées après les autres sujets pour ne jamais les gêner) */
   INTENTS.push(
     { strong: ["ca va", "comment vas", "comment allez", "comment tu vas", "comment il va", "tu vas bien", "vous allez bien", "la forme"],
       reply: () => ({ text: "Je vais très bien, merci ! 🙏 Et vous ? Comment puis-je vous aider ?" }) },
@@ -85,6 +85,8 @@
     { weak: ["au revoir", "bye", "a bientot", "bonne journee", "bonne soiree", "a plus"],
       reply: () => ({ text: "Au revoir, et que Dieu vous bénisse ! 🙏" }) }
   );
+
+  function answer(text) {
     const n = norm(text), tk = n.split(/[' ]+/);
     let best = null, bestScore = 0;
     INTENTS.forEach(it => {

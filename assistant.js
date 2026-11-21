@@ -74,7 +74,17 @@
       reply: () => ({ text: "Le MJSA (Mouvement des Jeunes au Service de l'Autel) de la paroisse Sainte Anne de Port-Bouët rassemble des jeunes qui veulent servir Dieu et l'Église par le service liturgique. Fondé en 1988, il offre une formation spirituelle, liturgique et humaine aux servants d'autel.", links: [["En savoir plus", "#apropos"]] }) }
   ];
 
-  function answer(text) {
+    /* Petites conversations (placées après les autres sujets pour ne jamais les gêner) */
+  INTENTS.push(
+    { strong: ["ca va", "comment vas", "comment allez", "comment tu vas", "comment il va", "tu vas bien", "vous allez bien", "la forme"],
+      reply: () => ({ text: "Je vais très bien, merci ! 🙏 Et vous ? Comment puis-je vous aider ?" }) },
+    { strong: ["qui es tu", "tu es qui", "t'es qui", "es tu un robot", "es tu une ia", "es tu humain", "tu es un robot", "ton nom", "tu t'appelles", "robot"],
+      reply: () => ({ text: "Je suis l'assistant automatique du MJSA : un petit programme, pas une personne. Je réponds aux questions sur les inscriptions, le programme, les messes et les contacts." }) },
+    { strong: ["aide", "help", "que peux tu", "que sais tu", "tu peux faire", "quoi demander"],
+      reply: () => ({ text: "Je peux vous renseigner sur :\n• l'inscription d'un enfant\n• le programme des activités\n• les horaires des messes et les servants\n• les répétitions et les formations\n• les contacts du MJSA\n\nChoisissez un sujet ci-dessous ou écrivez votre question." }) },
+    { weak: ["au revoir", "bye", "a bientot", "bonne journee", "bonne soiree", "a plus"],
+      reply: () => ({ text: "Au revoir, et que Dieu vous bénisse ! 🙏" }) }
+  );
     const n = norm(text), tk = n.split(/[' ]+/);
     let best = null, bestScore = 0;
     INTENTS.forEach(it => {

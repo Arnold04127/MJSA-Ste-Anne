@@ -1,7 +1,6 @@
 /* ===== Données : modifie ici, pas dans le HTML ===== */
 /* Clé gratuite reçue par email sur web3forms.com (elle peut rester visible dans le code) */
-const WEB3FORMS_KEY = "COLLE_TA_CLE_ICI";
-
+const WEB3FORMS_KEY = "ta-cle-ici";
 const PHOTOS = [
   ["soutanelle.jpeg", "Photo avec le gbonhi des magnifiques enfants de chœur", "13 juillet 2025"],
   ["theo.jpeg", "Le petit diocésain", "13 juillet 2025"],

@@ -34,20 +34,23 @@ const ACTIVITES = [
   ["À déterminer (juillet 2027)", "Camp de formation paroissial", "À déterminer"]
 ];
 
+/* Planning des messes : une ligne par messe.
+   Pour ajouter des servants, écris leurs noms entre guillemets dans servants: [ ].
+   Exemple : servants: ["KOFFI Kylian", "ADADE Marc"] */
 const MESSES = [
-  ["Lundi - Messe à 6h20", ["N'ZEBO Mael", "ADADE Marc"]],
-  ["Mardi - Messe à 6h20", ["YAO Eza", "ABLE Hans", "NIAKPA Rayan"]],
-  ["Mercredi - Messe à 6h20", ["KOUAKOU Roger", "ADOUKO Archange", "KOFFI Kylian"]],
-  ["Jeudi - Messe à 6h20", ["N'ZEBO Mael", "SAOURA Essaie", "LAHIBI ZORO"]],
-  ["Vendredi - Messe à 6h20", ["ADADE Marc", "MAMBO Archange", "KOFFI Kylian"]],
-  ["Samedi - Messe à 6h20", ["KOUAKOU Guy Roger", "DJAMALA David", "NIAKPA Rayan"]],
-  ["Samedi - Messe à 18h30", ["BINI Charnel", "AKA Christ", "YAYO Josseph"]],
-  ["Dimanche - Messe à 6h30", ["ABLE Hans", "NOGBOU Amichia", "KEITA Oracle", "ADOUKO Archange", "BISSIE Bryan", "R. DAGO Ange"]],
-  ["Dimanche - Messe à 8h30", ["N'GUESSAN Ange", "ADADE Marc", "MAMBO Amichia", "AGBOHIBOR Dylan", "KPAGNIBO Marc", "R. NOGBOU Jean"]],
-  ["Dimanche - Messe à 10h00", ["N'GUESSAN Prince", "LAHIBI ZORO", "TANOE Amichia", "KOFFI Kylian", "DIBLI Christ", "DJAMALA David"]],
-  ["Dimanche - Messe à l'hôpital, 9h00", ["N'ZEBO Mael", "NIAKPA Rayan", "KOUABRAN Guy"]],
-  ["Dimanche - Messe à l'hôpital, 11h00", ["YAYO Emmanuel", "N'GUETTIA Enoch", "DONDJI Mael"]],
-  ["Jeudi - Adoration à 18h30", ["BINI Charnel", "ADOUKO Archange"]]
+  { jour: "Lundi", heure: "6h20", type: "Messe", servants: [] },
+  { jour: "Mardi", heure: "6h20", type: "Messe", servants: [] },
+  { jour: "Mercredi", heure: "6h20", type: "Messe", servants: [] },
+  { jour: "Jeudi", heure: "6h20", type: "Messe", servants: [] },
+  { jour: "Jeudi", heure: "18h30", type: "Adoration", servants: [] },
+  { jour: "Vendredi", heure: "6h20", type: "Messe", servants: [] },
+  { jour: "Samedi", heure: "6h20", type: "Messe", servants: [] },
+  { jour: "Samedi", heure: "18h30", type: "Messe", servants: [] },
+  { jour: "Dimanche", heure: "6h30", type: "Messe", servants: [] },
+  { jour: "Dimanche", heure: "8h30", type: "Messe", servants: [] },
+  { jour: "Dimanche", heure: "9h00", type: "Messe à l'hôpital", servants: [] },
+  { jour: "Dimanche", heure: "10h00", type: "Messe", servants: [] },
+  { jour: "Dimanche", heure: "11h00", type: "Messe à l'hôpital", servants: [] }
 ];
 
 /* ===== Utilitaires ===== */
@@ -80,10 +83,16 @@ function renderActivities() {
 
 function renderMasses() {
   const list = $("#masses-list");
-  MESSES.forEach(([titre, servants]) => {
-    list.append(el("div", { className: "mass-day" }, [
-      el("h3", { textContent: titre }),
-      el("div", { className: "servant-grid" }, servants.map(s => el("div", { className: "servant-item", textContent: s })))
+  MESSES.forEach(m => {
+    const cases = m.servants.length
+      ? m.servants.map(n => el("div", { className: "servant-item", textContent: n }))
+      : [el("div", { className: "servant-empty", textContent: "Servants à annoncer" })];
+    list.append(el("article", { className: "mass-day" }, [
+      el("div", { className: "mass-head" }, [
+        el("div", {}, [el("h3", { textContent: m.jour }), el("span", { className: "mass-type", textContent: m.type })]),
+        el("span", { className: "mass-time", textContent: m.heure })
+      ]),
+      el("div", { className: "servant-grid" }, cases)
     ]));
   });
 }

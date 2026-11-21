@@ -146,6 +146,27 @@ function initTabs() {
   }));
 }
 
+/* ===== Remplace le formulaire par un message de remerciement ===== */
+function showThanks(form) {
+  const header = $(".form-header");
+  const again = el("button", { className: "submit-btn", type: "button", textContent: "Inscrire une autre personne" });
+  const done = el("div", { className: "form-done", role: "status" }, [
+    el("h2", { textContent: "Inscription envoyée !" }),
+    el("p", { textContent: "Merci ! Votre demande est bien enregistrée. Un responsable du MJSA vous contactera bientôt." }),
+    again
+  ]);
+  form.hidden = true;
+  if (header) header.hidden = true;
+  form.parentElement.append(done);
+  done.scrollIntoView({ behavior: "smooth", block: "center" });
+  again.addEventListener("click", () => {
+    done.remove();
+    form.hidden = false;
+    if (header) header.hidden = false;
+    $("#form-status").className = "form-status";
+  });
+}
+
 /* ===== Inscription -> base Supabase + email Web3Forms ===== */
 function initForm() {
   const form = $("#registration-form"), status = $("#form-status"), btn = $(".submit-btn", form);
@@ -190,8 +211,8 @@ function initForm() {
       if (mail.status === "rejected") console.error("Email :", mail.reason);
       if (db.status === "rejected" && mail.status === "rejected") throw new Error("Aucun envoi n'a fonctionné");
 
-      show("ok", "Merci ! Votre demande est enregistrée. Un responsable vous contactera.");
       form.reset();
+      showThanks(form);
     } catch (err) {
       console.error("Erreur envoi formulaire :", err);
       show("err", "L'envoi a échoué. Vérifiez votre connexion et réessayez, ou contactez-nous par téléphone.");

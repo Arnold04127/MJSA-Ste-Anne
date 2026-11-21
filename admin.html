@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Administration MJSA</title>
+<link rel="icon" href="logo.jpeg">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--red:#8f1d2c;--wine:#3a0c14;--gold:#c9a24a;--ink:#2a1d1f;--muted:#6b5a5d;--line:#e8dcd8;--tint:#f6efec;--paper:#fcfaf9}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:var(--paper);color:var(--ink);line-height:1.5}
+h1,h2{font-family:Georgia,serif}
+[hidden]{display:none!important}
+.top{background:var(--wine);color:#fff;padding:.8rem 1rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.top h1{font-size:1.2rem;color:var(--gold)}
+.wrap{max-width:1300px;margin:0 auto;padding:1rem}
+.login{max-width:380px;margin:12vh auto;background:#fff;border:1px solid var(--line);border-radius:6px;padding:1.6rem}
+.login h2{color:var(--red);margin-bottom:1rem}
+label{display:block;font-weight:600;font-size:.9rem;margin:.8rem 0 .3rem}
+input{width:100%;padding:.7rem;border:1px solid #cdbcb8;border-radius:4px;font:inherit;font-size:16px}
+input:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 3px rgba(143,29,44,.15)}
+button{font:inherit;font-weight:600;border:0;border-radius:4px;padding:.65rem 1.1rem;cursor:pointer;background:var(--red);color:#fff}
+button:hover{background:var(--wine)}
+button.ghost{background:#fff;color:var(--red);border:1px solid var(--red)}
+button.ghost:hover{background:var(--tint)}
+button.danger{background:#fff;color:#a3162f;border:1px solid #e3b4bc;padding:.3rem .6rem;font-size:.85rem}
+button.danger:hover{background:#fdecef}
+.login button{width:100%;margin-top:1.2rem}
+.msg{margin-top:.8rem;color:#a3162f;font-size:.9rem}
+.bar{display:flex;gap:.7rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem}
+.bar input{flex:1;min-width:200px}
+.count{color:var(--muted);font-weight:600}
+.box{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:#fff}
+table{width:100%;border-collapse:collapse;min-width:820px;font-size:.92rem}
+th,td{padding:.7rem .8rem;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--red);color:#fff;position:sticky;top:0}
+tr:nth-child(even){background:var(--tint)}
+td.mot{max-width:320px;white-space:pre-wrap;overflow-wrap:anywhere}
+.nowrap{white-space:nowrap}
+a{color:var(--red)}
+.empty{padding:2rem;text-align:center;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<section id="login-view" class="login">
+  <h2>Administration MJSA</h2>
+  <form id="login-form">
+    <label for="email">Email</label>
+    <input type="email" id="email" required autocomplete="username">
+    <label for="password">Mot de passe</label>
+    <input type="password" id="password" required autocomplete="current-password">
+    <button type="submit" id="login-btn">Se connecter</button>
+    <p class="msg" id="login-msg" role="alert"></p>
+  </form>
+</section>
+
+<section id="admin-view" hidden>
+  <div class="top">
+    <h1>Inscriptions MJSA</h1>
+    <div><button class="ghost" id="logout">Déconnexion</button></div>
+  </div>
+  <div class="wrap">
+    <div class="bar">
+      <input type="search" id="search" placeholder="Rechercher un nom, un email, un téléphone…">
+      <span class="count" id="count"></span>
+      <button id="refresh" class="ghost">Actualiser</button>
+      <button id="export">Exporter en CSV</button>
+    </div>
+    <div class="box">
+      <table>
+        <thead><tr><th>Date</th><th>Nom et prénom</th><th>Email</th><th>Téléphone</th><th>Naissance</th><th>Motivation</th><th></th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <p class="empty" id="empty" hidden>Aucune inscription.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+const SUPABASE_URL = "https://ekhlcsfuulupwjrpaxor.supabase.co";
+const SUPABASE_KEY = "sb_publishable_6mjgPmu5o0lXdIBH8qCcrQ_VW7F3wHW";
+const API = SUPABASE_URL + "/rest/v1/inscriptions";
+const $ = s => document.querySelector(s);
+let token = sessionStorage.getItem("mjsa_admin_token") || "";
+let data = [];
+
+const headers = () => ({ apikey: SUPABASE_KEY, Authorization: "Bearer " + token, "Content-Type": "application/json" });
+
+function showAdmin(on) {
+  $("#login-view").hidden = on;
+  $("#admin-view").hidden = !on;
+}
+function logout() {
+  token = ""; sessionStorage.removeItem("mjsa_admin_token"); data = [];
+  showAdmin(false);
+}
+
+$("#login-form").addEventListener("submit", async e => {
+  e.preventDefault();
+  const btn = $("#login-btn"), msg = $("#login-msg");
+  msg.textContent = ""; btn.disabled = true; btn.textContent = "Connexion…";
+  try {
+    const r = await fetch(SUPABASE_URL + "/auth/v1/token?grant_type=password", {
+      method: "POST",
+      headers: { apikey: SUPABASE_KEY, "Content-Type": "application/json" },
+      body: JSON.stringify({ email: $("#email").value.trim(), password: $("#password").value })
+    });
+    const j = await r.json();
+    if (!r.ok || !j.access_token) throw new Error("bad");
+    token = j.access_token;
+    sessionStorage.setItem("mjsa_admin_token", token);
+    $("#password").value = "";
+    showAdmin(true);
+    load();
+  } catch (err) {
+    msg.textContent = "Email ou mot de passe incorrect.";
+  } finally {
+    btn.disabled = false; btn.textContent = "Se connecter";
+  }
+});
+
+async function load() {
+  $("#count").textContent = "Chargement…";
+  try {
+    const r = await fetch(API + "?select=*&order=created_at.desc", { headers: headers() });
+    if (r.status === 401 || r.status === 403) { logout(); $("#login-msg").textContent = "Session expirée, reconnectez-vous."; return; }
+    if (!r.ok) throw new Error(r.status);
+    data = await r.json();
+    render();
+  } catch (err) {
+    console.error(err);
+    $("#count").textContent = "Erreur de chargement";
+  }
+}
+
+const fmtDate = d => d ? new Date(d).toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" }) : "";
+function age(d) {
+  if (!d) return "";
+  const b = new Date(d), n = new Date();
+  let a = n.getFullYear() - b.getFullYear();
+  if (n < new Date(n.getFullYear(), b.getMonth(), b.getDate())) a--;
+  return a;
+}
+function td(content, cls) {
+  const c = document.createElement("td");
+  if (cls) c.className = cls;
+  if (content instanceof Node) c.append(content); else c.textContent = content;
+  return c;
+}
+function link(href, text) { const a = document.createElement("a"); a.href = href; a.textContent = text; return a; }
+
+function render() {
+  const q = $("#search").value.trim().toLowerCase();
+  const list = data.filter(x => !q || [x.nom, x.prenom, x.email, x.telephone, x.motivation].join(" ").toLowerCase().includes(q));
+  const body = $("#rows"); body.replaceChildren();
+  list.forEach(x => {
+    const tr = document.createElement("tr");
+    const del = document.createElement("button");
+    del.className = "danger"; del.textContent = "Supprimer";
+    del.addEventListener("click", () => remove(x));
+    const a = age(x.date_naissance);
+    tr.append(
+      td(fmtDate(x.created_at), "nowrap"),
+      td((x.nom || "").toUpperCase() + " " + (x.prenom || "")),
+      td(x.email ? link("mailto:" + x.email, x.email) : ""),
+      td(x.telephone ? link("tel:" + x.telephone, x.telephone) : "", "nowrap"),
+      td(x.date_naissance ? x.date_naissance + (a !== "" ? " (" + a + " ans)" : "") : "", "nowrap"),
+      td(x.motivation || "", "mot"),
+      td(del)
+    );
+    body.append(tr);
+  });
+  $("#empty").hidden = list.length > 0;
+  $("#count").textContent = list.length + (list.length > 1 ? " inscrits" : " inscrit") + (q ? " (sur " + data.length + ")" : "");
+}
+
+async function remove(x) {
+  if (!confirm("Supprimer définitivement l'inscription de " + x.prenom + " " + x.nom + " ?")) return;
+  const r = await fetch(API + "?id=eq." + encodeURIComponent(x.id), { method: "DELETE", headers: headers() });
+  if (r.ok) { data = data.filter(d => d.id !== x.id); render(); }
+  else alert("Suppression impossible (code " + r.status + ").");
+}
+
+function exportCsv() {
+  const cols = ["created_at", "nom", "prenom", "email", "telephone", "date_naissance", "motivation"];
+  const esc = v => '"' + String(v ?? "").replace(/"/g, '""') + '"';
+  const lines = [cols.join(";")].concat(data.map(x => cols.map(c => esc(x[c])).join(";")));
+  const blob = new Blob(["\ufeff" + lines.join("\r\n")], { type: "text/csv;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "inscriptions-mjsa-" + new Date().toISOString().slice(0, 10) + ".csv";
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+$("#search").addEventListener("input", render);
+$("#refresh").addEventListener("click", load);
+$("#export").addEventListener("click", exportCsv);
+$("#logout").addEventListener("click", logout);
+
+if (token) { showAdmin(true); load(); }
+</script>
+</body>
+</html>

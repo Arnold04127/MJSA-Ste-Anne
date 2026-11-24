@@ -3,7 +3,7 @@
    Exemple : { prenoms: "Marie", nom: "KOUASSI", fonction: "Secrétaire", photo: "marie-kouassi.jpeg" },
    Les lignes laissées vides sont des cases à compléter. */
 const MEMBRES = [
-{ prenoms: "Axel-Mary Oswald", nom: "BROU", fonction: "1er Responsable", photo: "brou-axel" },
+{ prenoms: "Axel-Mary Oswald", nom: "BROU", fonction: "1er Responsable", photo: "brou-axel.jpg.jpeg" },
   { prenoms: "Bossy Theophanie", nom: "KOFFI", fonction: "Vice Responsable", photo: "koffi-theophanie" },
   { prenoms: "Yao Chabel", nom: "KUNY", fonction: "2e Vice Responsable & Communication", photo: "kuny-chabel" },
   { prenoms: "Adjiman", nom: "KOUAKOU", fonction: "Secrétaire", photo: "kouakou-adjiman" },

@@ -8,7 +8,7 @@ const MEMBRES = [
   { prenoms: "Yao Chabel", nom: "KUNY", fonction: "2e Vice Responsable & Communication", photo: "kuny-chabel.jpeg" },
   { prenoms: "Adjimann", nom: "KOUAKOU", fonction: "Secrétaire", photo: "kouakou-adjiman.jpeg" },
   { prenoms: "Yekony Edgar", nom: "BLA", fonction: "Formation & Spiritualité", photo: "bla-edgar.jpeg" },
-  { prenoms: "Bruno", nom: "ZABSORNE", fonction: "Formation", photo: "zabsorne-bruno" },
+  { prenoms: "Bruno", nom: "ZABSORNE", fonction: "Formation", photo: "zabsorne-bruno.jpeg" },
   { prenoms: "Ange", nom: "DAGO", fonction: "Programmation", photo: "dago-ange.jpeg" },
   { prenoms: "Jean Yves", nom: "MALAMBIAN", fonction: "Liturgie ", photo: "malambian-jeanyves.jpeg" },
   { prenoms: "Kouadio Yvan", nom: "KRA", fonction: "Organisation & Chapelle", photo: "kra-yvan" },

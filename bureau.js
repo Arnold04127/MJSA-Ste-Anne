@@ -15,7 +15,7 @@ const MEMBRES = [
   { prenoms: "Jean Levy Arnold", nom: "NOGBOU", fonction: "Organisation & Communication", photo: "nogbou-arnold.jpg" },
   { prenoms: "Tresor", nom: "OBLE", fonction: "Organisation", photo: "oble-tresor.jpeg" },
   { prenoms: "Christ", nom: "AKA", fonction: "Sacristain", photo: "aka-christ.jpeg" },
-  { prenoms: "N'cho Georges Loic", nom: "AKO", fonction: "Trésorier adjoint", photo: "ako-loic" },
+  { prenoms: "N'cho Georges Loic", nom: "AKO", fonction: "Trésorier adjoint", photo: "ako-loic.jpeg" },
 
 ];
 

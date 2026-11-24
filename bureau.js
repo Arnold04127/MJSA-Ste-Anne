@@ -5,7 +5,7 @@
 const MEMBRES = [
 { prenoms: "Axel-Mary Oswald", nom: "BROU", fonction: "1er Responsable", photo: "brou-axel.jpg.jpeg" },
   { prenoms: "Bossy Theophanie", nom: "KOFFI", fonction: "Vice Responsable", photo: "koffi-theophanie" },
-  { prenoms: "Yao Chabel", nom: "KUNY", fonction: "2e Vice Responsable & Communication", photo: "kuny-chabel" },
+  { prenoms: "Yao Chabel", nom: "KUNY", fonction: "2e Vice Responsable & Communication", photo: "kuny-chabel.jpeg" },
   { prenoms: "Adjiman", nom: "KOUAKOU", fonction: "Secrétaire", photo: "kouakou-adjiman" },
   { prenoms: "Yekony Edgar", nom: "BLA", fonction: "Formation & Spiritualité", photo: "bla-edgar" },
   { prenoms: "Bruno", nom: "ZABSORNE", fonction: "Formation", photo: "zabsorne-bruno" },

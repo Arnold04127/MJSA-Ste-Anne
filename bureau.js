@@ -10,7 +10,7 @@ const MEMBRES = [
   { prenoms: "Yekony Edgar", nom: "BLA", fonction: "Formation & Spiritualité", photo: "bla-edgar" },
   { prenoms: "Bruno", nom: "ZABSORNE", fonction: "Formation", photo: "zabsorne-bruno" },
   { prenoms: "Ange", nom: "DAGO", fonction: "Liturgie & Programmation", photo: "dago-ange" },
-  { prenoms: "Jean Yves", nom: "MALAMBIAN", fonction: "Liturgie & Programmation", photo: "malambian-jeanyves" },
+  { prenoms: "Jean Yves", nom: "MALAMBIAN", fonction: "Liturgie & Programmation", photo: "malambian-jeanyves.jpeg" },
   { prenoms: "Kouadio Yvan", nom: "KRA", fonction: "Organisation & Chapelle", photo: "kra-yvan" },
   { prenoms: "Jean Levy Arnold", nom: "NOGBOU", fonction: "Organisation & Communication", photo: "nogbou-arnold" },
   { prenoms: "Tresor", nom: "OBLE", fonction: "Organisation", photo: "oble-tresor" },

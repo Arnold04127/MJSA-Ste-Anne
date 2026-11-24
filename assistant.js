@@ -4,7 +4,7 @@
 
   const CONTACT = { tels: ["+225 01 52 99 91 26", "+225 01 51 00 61 41"], mail: "koffibossypatrick@gmail.com" };
   const DAYS = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"];
-  const SUGGESTIONS = ["Comment s'inscrire ?", "Programme des activités", "Horaires des messes", "Répétitions et formations", "Contacter le responsable"];
+  const SUGGESTIONS = ["Comment s'inscrire ?", "Programme des activités", "Horaires des messes", "Répétitions et formations", "Membres du bureau", "Contacter le responsable"];
 
   const norm = s => String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     .replace(/[’]/g, "'").replace(/[^a-z0-9' ]+/g, " ").replace(/\s+/g, " ").trim();
@@ -76,6 +76,7 @@
 
   /* Petites conversations (placées après les autres sujets pour ne jamais les gêner) */
   INTENTS.push(
+    { strong: ["bureau", "membre", "equipe", "organigramme", "comite", "dirigeant"], reply: replyBureau },
     { strong: ["ca va", "comment vas", "comment allez", "comment tu vas", "comment il va", "tu vas bien", "vous allez bien", "la forme"],
       reply: () => ({ text: "Je vais très bien, merci ! 🙏 Et vous ? Comment puis-je vous aider ?" }) },
     { strong: ["qui es tu", "tu es qui", "t'es qui", "es tu un robot", "es tu une ia", "es tu humain", "tu es un robot", "ton nom", "tu t'appelles", "robot"],
@@ -86,6 +87,46 @@
       reply: () => ({ text: "Au revoir, et que Dieu vous bénisse ! 🙏" }) }
   );
 
+  /* ===== Bureau : lit la liste MEMBRES de bureau.js (toujours à jour) ===== */
+  const membres = () => (typeof MEMBRES !== "undefined" ? MEMBRES : []).filter(m => (m.prenoms || "").trim() || (m.nom || "").trim());
+  const nomM = m => ((m.prenoms || "") + " " + (m.nom || "")).trim();
+  const STOP = ["des", "les", "une", "qui", "que", "est", "pas", "pour", "par", "sur", "son", "ses", "mes", "tes", "nos", "vos", "car", "aux", "ton", "mon", "dans", "avec", "fait"];
+  const stem = t => t.slice(0, 6);
+
+  function chercherMembres(n, tk) {
+    const list = membres();
+    const mots = tk.filter(t => t.length >= 3 && !STOP.includes(t));
+    let best = 0, parNom = [];
+    list.forEach(m => {
+      const c = norm(nomM(m)).split(" ").filter(t => t.length >= 3 && mots.includes(t)).length;
+      if (c > best) { best = c; parNom = [m]; } else if (c === best && c > 0) parNom.push(m);
+    });
+    let parFonction = [];
+    const cue = ["qui", "fonction", "role", "poste", "charge", "occupe"].some(k => tk.includes(k));
+    if (cue && !parNom.length) {
+      const racines = mots.filter(t => t.length >= 4).map(stem);
+      parFonction = list.filter(m => norm(m.fonction || "").split(" ").filter(t => t.length >= 4).some(t => racines.includes(stem(t))));
+    }
+    return { parNom, parFonction };
+  }
+
+  function replyMembres(list, n, tk) {
+    const lignes = list.map(m => "• " + nomM(m) + (m.fonction ? " : " + m.fonction : ""));
+    let text = (list.length > 1 ? "Voici ce que j'ai trouvé :\n" : "") + lignes.join("\n");
+    const links = [["Voir le bureau", "#bureau"]];
+    if (["numero", "telephone", "contact", "joindre", "appeler", "whatsapp", "email", "mail"].some(k => has(n, tk, k))) {
+      text += "\n\nJe n'ai pas les coordonnées personnelles des membres. Pour les joindre, contactez le MJSA :";
+      links.push(...contactLinks());
+    }
+    return { text, links };
+  }
+
+  function replyBureau() {
+    const list = membres();
+    if (!list.length) return { text: "La liste des membres du bureau n'est pas disponible pour le moment.", links: contactLinks() };
+    return { text: "Membres du bureau du MJSA :\n" + list.map(m => "• " + nomM(m) + (m.fonction ? " : " + m.fonction : "")).join("\n"), links: [["Voir le bureau", "#bureau"]] };
+  }
+
   function answer(text) {
     const n = norm(text), tk = n.split(/[' ]+/);
     let best = null, bestScore = 0;
@@ -93,6 +134,9 @@
       const s = 3 * (it.strong || []).filter(k => has(n, tk, k)).length + (it.weak || []).filter(k => has(n, tk, k)).length;
       if (s > bestScore) { best = it; bestScore = s; }
     });
+    const r = chercherMembres(n, tk);
+    if (r.parNom.length && 9 > bestScore) return replyMembres(r.parNom, n, tk);
+    if (r.parFonction.length && 5 > bestScore) return replyMembres(r.parFonction, n, tk);
     if (best) return best.reply(n, tk);
     return { text: "Je n'ai pas bien compris, ou je n'ai pas cette information. Essayez avec d'autres mots, ou contactez directement le responsable :", links: contactLinks() };
   }
